@@ -8,3 +8,18 @@ Apple CMS program is a set of PHP and MYSQL environment operating in a perfect a
 本程序仅供内部学习和交流使用，没有内置任何数据，请在遵守当地法律的前提下使用本站程序，对用户在使用过程中的自行维护的信息内容本站不负任何责任！
 
 This program is for internal learning and communication use only, there is no built-in data, please comply with local laws under the premise of using the site program, the user in the process of self-maintenance of the information content of this site is not responsible!
+
+## 如果是二级目录安装时(支持中文二级目录安装),在根目录和二级目录都应该放入模板的相应文件,防止二级目录安装时候,找不到对应的模板文件.
+## 二级目录安装时的伪静态
+   location ~ ^/([^/]+)/ {
+    if (!-e $request_filename) {
+        rewrite ^/([^/]+)/([^/]+)/([^/]+)\.html$ /$1/index.php?s=$2/$3 last;
+        rewrite ^/([^/]+)/([^/]+)\.html$ /$1/index.php?s=$2 last;
+        rewrite ^/([^/]+)/(.*)$ /$1/index.php?s=$2 last;
+        break;
+      }
+    }
+
+## 不建议使用市面上的免费模板文件,要去官方有信誉的模板商城购买模板,免费模板绝大多数都是加了跳转代码的(测试过)
+    
+

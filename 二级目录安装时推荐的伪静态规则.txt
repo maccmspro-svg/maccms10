@@ -1,0 +1,8 @@
+location ~ ^/([^/]+)/ {
+    if (!-e $request_filename) {
+        rewrite ^/([^/]+)/([^/]+)/([^/]+)\.html$ /$1/index.php?s=$2/$3 last;
+        rewrite ^/([^/]+)/([^/]+)\.html$ /$1/index.php?s=$2 last;
+        rewrite ^/([^/]+)/(.*)$ /$1/index.php?s=$2 last;
+        break;
+    }
+}

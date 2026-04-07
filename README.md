@@ -15,7 +15,7 @@ This program is for internal learning and communication use only, there is no bu
 
 ## 不建议使用市面上的免费模板文件,要去官方有信誉的模板商城购买模板,免费模板绝大多数都是加了跳转代码的(测试过)
 
-## 市面上 (https://www.maccms.la/) 这个程序存在大量的漏洞不建议使用,下面列出具体的主要漏洞地方,仅供参考:
+## 市面上其他maccms10程序存在大量的漏洞不建议使用,下面列出具体的主要漏洞地方,仅供参考:
 
 基于对源码的静态扫描（application/、extend/、入口与 ThinkPHP 核心），整理出以下安全相关发现与说明。此为代码审计视角，未做动态渗透；实际风险取决于部署、配置与是否已打补丁。
 

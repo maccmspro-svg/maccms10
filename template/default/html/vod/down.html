@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+{include file="block/vod_detail_info"}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-xl-9">
+      {include file="block/vod_downlist"}
+      {if !empty($obj.vod_content)}
+      <div class="box gap show">
+        <div class="box-head clearfix">
+          <h3 class="box-head-title"><i class="fa fa-file-text-o"></i>&nbsp;<span>内容简介</span></h3>
+        </div>
+        <div class="detail-desc-content layout-box">
+          {$obj.vod_content|mac_filter_html|mac_url_content_img}
+        </div>
+      </div>
+      {/if}
+      {if !empty($obj.vod_actor) && mac_data_count(0,'all','actor') gt 0 && !empty($detail_actor_array)}
+      <div class="box gap movie">
+        <div class="box-head clearfix">
+          <h3 class="box-head-title"><i class="fa fa-heart-o"></i>&nbsp;<span>同主演作品 </span></h3>
+          <span class="box-head-more"><i class="fa fa-long-arrow-down"></i>&nbsp;明星可左右滑动</span>
+        </div>
+        <div class="layout-box detail-actor-box pb-0">
+          <div class="detail-actor-tab ewave-swiper ewave-swiper-nav" data-slidetoclickedslide="true">
+            <ul class="swiper-wrapper">
+              {maccms:foreach name="$detail_actor_array" id="actor" key="key_actor"}
+              <li class="swiper-slide ewave-tab{if $key_actor==0} active{/if}" data-target="#detail-actor-{$key_actor}">
+                <div class="detail-actor-tab-item{if $actor.status==0} no-actor{/if}">
+                  {if $actor.status==1}
+                  <div class="detail-actor-tab-cover" style="background-image:url({$actor.actor.actor_pic|mac_url_img});"></div>
+                  {/if}
+                  <span class="detail-actor-tab-name">{$actor.name}</span> </div>
+              </li>
+              {/maccms:foreach}
+            </ul>
+          </div>
+          <div class="detail-actor-tab-box">
+            {maccms:foreach name="$detail_actor_array" id="actor" key="key_actor"}
+            <ul class="row vod-list ewave-tab-content" id="detail-actor-{$key_actor}"{if $key_actor==0} style="display:block;"{else/} style="display:none;"{/if}>
+            {maccms:vod actor="'.$actor['name'].'" not="'.$obj['vod_id'].'" num="4" by="time" order="desc"}
+            <li class="col-xs-4 col-md-3{if $key gt 3} hidden-xs hidden-sm{/if}">{include file="block/vod_item"}</li>
+            {/maccms:vod}
+            </ul>
+            {/maccms:foreach}
+          </div>
+        </div>
+      </div>
+      {/if}
+      {if $obj.vod_plot==1}
+      <div class="box gap show">
+        <div class="box-head clearfix">
+          <h3 class="box-head-title"><a href="{:mac_url_plot_detail($obj,['page'=>1])}"><i class="fa fa-file-text-o"></i>&nbsp;<span>分集剧情</span></a></h3>
+          <a class="box-head-more" href="{:mac_url_plot_detail($obj,['page'=>1])}">更多&nbsp;<i class="fa fa-angle-right"></i></a>
+        </div>
+        <div class="layout-box">
+          <ul class="plot-list row">
+            {maccms:foreach name="$obj.vod_plot_list"}
+            {if $key elt 6}
+            <li class="plot-item col-xs-12 col-md-6{if $key gt 3} hidden-xs hidden-sm{/if}"> <a href="{:mac_url_plot_detail($obj,['page'=>$key])}" title="{$vo.name}">
+              <h5 class="plot-item-title text-overflow">{$vo.name|default='第'.$key.'集'}</h5>
+              <p class="plot-item-desc text-row-2">{$vo.detail|mac_filter_html|mac_substring=80|default='&nbsp;'}</p>
+              </a> </li>
+            {/if}
+            {/maccms:foreach}
+          </ul>
+        </div>
+      </div>
+      {/if}
+      {include file="block/vod_related"}
+      {include file="block/comment"}
+    </div>
+    <div class="col-xs-12 col-xl-3 hidden-xs hidden-sm hidden-md hidden-lg movie ewave-sticky gap">
+      <div class="box ranking-box">
+          <div class="box-head">
+            <h3 class="box-head-title">&nbsp;<i class="fa fa-fire"></i>&nbsp;<span>热门{$obj.type.type_name}</span></h3>
+          </div>
+          <ul class="ranking-list vod-ranking-list">
+            {maccms:vod num="10" type="current" by="hits_week" order="desc"}
+            {if condition="$key elt 3"}
+            {include file="block/vod_item_ranking"}
+            {else/}
+            {include file="block/vod_item_ranking_text"}
+            {/if}
+            {/maccms:vod}
+          </ul>
+        </div>
+    </div>
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>

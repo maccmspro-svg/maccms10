@@ -1,0 +1,13 @@
+<div class="detail-star ewave-star-box clearfix">
+              <div class="star-count-box"><span class="ewave-star-count">{$obj.vod_score_num}</span>人<span class="hidden-xs hidden-sm">已评分</span></div>
+              <ul class="ewave-star clearfix" data-id="{$obj.vod_id}" data-mid="{if $maccms.mid==10}1{else/}{$maccms.mid}{/if}" data-id="{$obj.vod_id}" score="{$obj.vod_score}" data-star="{$obj.vod_score/2|ceil}" data-score-num="{$obj.vod_score_num}"></ul>
+              <h4 class="ewave-star-text"></h4>
+              <h4 class="ewave-star-num">{$obj.vod_score}</h4>
+            </div>
+            <script>
+            {if $GLOBALS.config.view.vod_detail==2}
+              eWave.Star.Static=1;
+            {else/}
+              eWave.Star.Static=0;
+            {/if}
+            </script>

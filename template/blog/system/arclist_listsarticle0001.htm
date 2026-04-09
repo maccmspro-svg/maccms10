@@ -1,0 +1,14 @@
+          <div class="content">
+            <div class="content-header"> <a href="{$field.arcurl}" title="{$field.title}" target="_blank">
+              <h2>{$field.title}</h2>
+              </a>
+              <div class="content-info"> <span class="mr10 postclock"><i class="icon-clock"></i>{$field.add_time|MyDate='Y-m-d H:i:s',###}</span> <span class="mr10 postuser"><i class="icon-user"></i><a>{$field.author}</a></span> <span class="mr10 posteye"><i class=" icon-eye" ></i>{$field.click}</span>  </div>
+            </div>
+            <div class="content-img"> <a href="{$field.arcurl}" title="{$field.title}" target="_blank"> <img class="lazy thumbnail" src="{$field.litpic}" data-original="{$field.litpic}" alt="{$field.title}" /> </a> </div>
+            
+            <div class="content-note">
+              <p>{$field.seo_description|html_msubstr=###,0,90,true}</p>
+              
+              <div class="content-info-r"> <span class="mr10"><a href="{$field.arcurl}" title="{$field.title}" target="_blank">READ MORE</a><i class=" icon-export-alt" ></i></span> </div>
+            </div>
+          </div>

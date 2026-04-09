@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+{php}$member_page='user_address';{/php}
+<title>收货地址 - 会员中心 - {$maccms.site_name}</title>
+<meta name="keywords" content="收货地址"/>
+<meta name="description" content="管理收货地址"/>
+{include file="user/include" /}
+</head>
+<body>
+{include file="user/head" /}
+<div class="container member-container clearfix">
+  {include file="user/left"}
+  <div class="member-right">
+    <h2 class="member-title">收货地址</h2>
+    <div class="layout-box" style="margin-bottom:20px;padding:16px;">
+      <h3 style="margin:0 0 12px;font-size:16px;">{if condition="!empty($edit.ua_id)"}编辑地址{else/}新增地址{/if}</h3>
+      <form method="post" action="{:mac_url('user/user_address')}" class="form-horizontal">
+        <input type="hidden" name="ua_id" value="{$edit.ua_id|default=''}">
+        <div class="form-group" style="margin-bottom:10px;">
+          <label>收货人</label>
+          <input type="text" name="ua_name" class="form-control" style="max-width:280px;" required value="{$edit.ua_name|default=''}">
+        </div>
+        <div class="form-group" style="margin-bottom:10px;">
+          <label>手机</label>
+          <input type="text" name="ua_phone" class="form-control" style="max-width:280px;" required value="{$edit.ua_phone|default=''}">
+        </div>
+        <div class="form-group" style="margin-bottom:10px;">
+          <label>省市区</label>
+          <input type="text" name="ua_region" class="form-control" style="max-width:480px;" placeholder="如：广东省 深圳市 南山区" value="{$edit.ua_region|default=''}">
+        </div>
+        <div class="form-group" style="margin-bottom:10px;">
+          <label>详细地址</label>
+          <input type="text" name="ua_address" class="form-control" style="max-width:480px;" required value="{$edit.ua_address|default=''}">
+        </div>
+        <div class="form-group" style="margin-bottom:10px;">
+          <label><input type="checkbox" name="ua_is_default" value="1" {if condition="!empty($edit.ua_is_default)"}checked{/if}> 设为默认</label>
+        </div>
+        <button type="submit" class="btn btn-primary">保存</button>
+        {if condition="!empty($edit.ua_id)"}
+        <a href="{:mac_url('user/user_address')}" class="btn btn-default">取消编辑</a>
+        {/if}
+      </form>
+    </div>
+    <table class="table">
+      <tr>
+        <td>收货人</td>
+        <td class="hidden-xs">手机</td>
+        <td>地址</td>
+        <td style="width:100px;">默认</td>
+        <td style="width:120px;">操作</td>
+      </tr>
+      {volist name="list" id="vo"}
+      <tr>
+        <td>{$vo.ua_name}</td>
+        <td class="hidden-xs">{$vo.ua_phone}</td>
+        <td>{$vo.ua_region} {$vo.ua_address}</td>
+        <td>{if condition="$vo.ua_is_default eq 1"}是{else/}否{/if}</td>
+        <td>
+          <a href="{:mac_url('user/user_address',['edit'=>$vo['ua_id']])}">编辑</a>
+          &nbsp;
+          <a href="{:mac_url('user/user_address_del',['id'=>$vo.ua_id])}" onclick="return confirm('确定删除？');">删除</a>
+        </td>
+      </tr>
+      {/volist}
+    </table>
+    {include file="user/paging"}
+  </div>
+</div>
+{include file="user/foot" /}
+</body>
+</html>

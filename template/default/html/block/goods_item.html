@@ -1,0 +1,13 @@
+<div class="goods-item">
+  <a class="goods-item-img shining" href="{:mac_url('goods/detail',['id'=>$vo.goods_id])}">
+    <div class="img-wrapper lazyload" data-original="{$vo.goods_pic|mac_url_img}"></div>
+    {if $vo.goods_level gt 8}<span class="goods-item-badge">荐</span>{/if}
+  </a>
+  <div class="goods-item-info">
+    <h3 class="goods-item-title text-row-1 text-row-xs-2"><a href="{:mac_url('goods/detail',['id'=>$vo.goods_id])}"{if !empty($vo.goods_color)} style="color:#{$vo.goods_color};"{/if}>{$vo.goods_name}</a></h3>
+    <div class="goods-item-meta">
+      <span class="goods-item-price">￥{$vo.goods_price}</span>
+      <span class="goods-item-points">{if !empty($vo.goods_points)}{$vo.goods_points} 积分{/if}</span>
+    </div>
+  </div>
+</div>

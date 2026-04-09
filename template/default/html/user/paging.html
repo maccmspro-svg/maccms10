@@ -1,0 +1,19 @@
+{if $__PAGING__.page_total gt 1}
+<div class="member-page">
+      <a class="hidden-xs" href="{if $__PAGING__.page_current gt 1}{$__PAGING__.page_url|str_replace='PAGELINK',1,###}{else/}javascript:eWave.Layer.Error('已经是第一页啦');{/if}" title="首页">首页</a>
+      <a href="{if $__PAGING__.page_current gt 1}{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_prev,###}{else/}javascript:eWave.Layer.Error('没有上一页啦');{/if}" title="上一页">上一页</a>
+      {volist name="$__PAGING__.page_num" id="num"}
+      {if $__PAGING__.page_current == $num}
+      <a class="member-page-current hidden-xs" href="javascript:;" title="第{$num}页">{$num}</a>
+      <a class="member-page-current hidden-sm hidden-md hidden-lg hidden-xl hidden-xxl" href="javascript:;" title="第{$num}页">{$num}/{$__PAGING__.page_total}</a>
+      {else}
+      <a class="hidden-xs" href="{$__PAGING__.page_url|str_replace='PAGELINK',$num,###}" title="第{$num}页" >{$num}</a>
+      {/if}
+      {/volist}
+      <a href="{if $__PAGING__.page_current lt $__PAGING__.page_total}{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_next,###}{else/}javascript:eWave.Layer.Error('没有下一页啦');{/if}" title="下一页">下一页</a>
+      <a class="hidden-xs" href="{if $__PAGING__.page_current lt $__PAGING__.page_total}{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_total,###}{else/}javascript:eWave.Layer.Error('已经是最后一页啦');{/if}" title="尾页">尾页</a>
+    </div>
+    {/if}
+    {if $__PAGING__.record_total==0}
+    <div class="member-empty text-center"><i class="fa fa-minus-circle"></i>&nbsp;暂无记录</div>
+    {/if}

@@ -1,0 +1,75 @@
+<ul class="side-menu-nav">
+    <li class="{if $maccms.aid==1} current{/if}"><a href="{$maccms.path}">首页</a></li>
+    {maccms:type ids="parent" mid="13" by="sort" order="asc" id="type" key="key_type"}
+    {if empty($type.childids)}
+    <li class="{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} current{/if}"><a href="{$type|mac_url_type}">{$type.type_name}</a></li>
+    {else/}
+    <li class="side-menu-parent ewave-accordion{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} current active{/if}">
+      <div class="ewave-accordion-toggle clearfix"><a href="{$type|mac_url_type}">{$type.type_name}</a><i class="fa fa-angle-right"></i></div>
+      <div class="side-menu-sub ewave-accordion-content">
+        <div class="side-menu-sub-wrapper">
+        {maccms:type ids="child" parent="'.$type['type_id'].'" by="sort" order="asc"}
+        <a class="{if $GLOBALS.type_id==$vo.type_id} current{/if}" href="{$vo|mac_url_type}"><span>{$vo.type_name}</span></a>
+        {/maccms:type}
+        </div>
+      </div>
+    </li>
+    {/if}
+    {/maccms:type}
+    {maccms:type ids="parent" flag="vod" by="sort" order="asc" id="type" key="key_type"}
+    {if empty($type.childids)}
+    <li class="{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} current{/if}"><a href="{$type|mac_url_type}">{$type.type_name}</a></li>
+    {else/}
+    <li class="side-menu-parent ewave-accordion{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} current active{/if}">
+      <div class="ewave-accordion-toggle clearfix"><a href="{$type|mac_url_type}">{$type.type_name}</a><i class="fa fa-angle-right"></i></div>
+      <div class="side-menu-sub ewave-accordion-content">
+        <div class="side-menu-sub-wrapper">
+        {maccms:type ids="child" parent="'.$type['type_id'].'" by="sprt" order="asc"}
+        <a class="{if $GLOBALS.type_id==$vo.type_id} current{/if}" href="{$vo|mac_url_type}"><span>{$vo.type_name}</span></a>
+        {/maccms:type}
+        </div>
+      </div>
+    </li>
+    {/if}
+    {/maccms:type}
+    {maccms:type ids="parent" flag="art" by="sort" order="asc" id="type" key="key_type"}
+    {if empty($type.childids)}
+    <li class="{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} current{/if}"><a href="{$type|mac_url_type}">{$type.type_name}</a></li>
+    {else/}
+    <li class="side-menu-parent ewave-accordion{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} current active{/if}">
+      <div class="ewave-accordion-toggle clearfix"><a href="{$type|mac_url_type}">{$type.type_name}</a><i class="fa fa-angle-right"></i></div>
+      <div class="side-menu-sub ewave-accordion-content">
+        <div class="side-menu-sub-wrapper">
+        {maccms:type ids="child" parent="'.$type['type_id'].'" by="sprt" order="asc"}
+        <a class="{if $GLOBALS.type_id==$vo.type_id} current{/if}" href="{$vo|mac_url_type}"><span>{$vo.type_name}</span></a>
+        {/maccms:type}
+        </div>
+      </div>
+    </li>
+    {/if}
+    {/maccms:type}
+    {maccms:type ids="parent" mid="8" by="sort" order="asc" id="type" key="key_type"}
+    {if empty($type.childids)}
+    <li class="{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} current{/if}"><a href="{$type|mac_url_type}">{$type.type_name}</a></li>
+    {else/}
+    <li class="side-menu-parent ewave-accordion{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} current active{/if}">
+      <div class="ewave-accordion-toggle clearfix"><a href="{$type|mac_url_type}">{$type.type_name}</a><i class="fa fa-angle-right"></i></div>
+      <div class="side-menu-sub ewave-accordion-content">
+        <div class="side-menu-sub-wrapper">
+        {maccms:type ids="child" parent="'.$type['type_id'].'" by="sprt" order="asc"}
+        <a class="{if $GLOBALS.type_id==$vo.type_id} current{/if}" href="{$vo|mac_url_type}"><span>{$vo.type_name}</span></a>
+        {/maccms:type}
+        </div>
+      </div>
+    </li>
+    {/if}
+    {/maccms:type}
+    {if mac_data_count(0,'all','topic') gt 0}
+    <li class="{if $maccms.mid==3} current{/if}"><a href="{:mac_url_topic_index()}">影视专题</a></li>
+    {/if}
+    <li class="{if $label_name=='new'} current{/if}"><a href="{:mac_url('label/new')}" title="最近更新">最近更新</a></li>
+    <li class="{if $label_name=='ranking'} current{/if}"><a href="{:mac_url('label/ranking')}" title="排行榜">排行榜</a></li>
+    {if $GLOBALS.config.gbook.status==1}
+    <li class="{if $maccms.mid==5} current{/if}"><a href="{:mac_url('gbook/index')}">留言报错</a></li>
+    {/if}
+  </ul>

@@ -1,0 +1,21 @@
+{if $maccms.aid==1}
+<title>{$maccms.site_name}</title>
+<meta name="description" content="{$maccms.site_description}">
+<meta name="keywords" content="{$maccms.site_keywords}">
+{elseif $maccms.mid==2 && $maccms.aid==2}
+<title>{$obj.type_title|default=$obj.type_name} - {$maccms.site_name}</title>
+<meta name="description" content="{$obj.type_des}">
+<meta name="keywords" content="{$obj.type_key}">
+{elseif $maccms.mid==2 && $maccms.aid==3}
+<title>{$obj.art_name} - {$maccms.site_name}</title>
+<meta name="description" content="{$obj.art_blurb|mac_filter_html}">
+<meta name="keywords" content="{$obj.art_name}">
+{elseif $maccms.mid==2 && $maccms.aid==4}
+<title>文章搜索 - {$maccms.site_name}</title>
+<meta name="description" content="文章搜索结果">
+<meta name="keywords" content="{$param.wd}">
+{else/}
+<title>{$maccms.site_name}</title>
+<meta name="description" content="{$maccms.site_description}">
+<meta name="keywords" content="{$maccms.site_keywords}">
+{/if}

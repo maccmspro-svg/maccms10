@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>标签主页_{eyou:global name="web_name" /}</title> 
+<meta name="description" content="" /> 
+<meta name="keywords" content="" /> 
+<link href="{eyou:global name='web_cmspath' /}/favicon.ico" rel="shortcut icon" type="image/x-icon" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE;chrome=1">
+{eyou:static file="skin/js/jquery-v1.10.2.min.js" /}
+{eyou:static file="skin/css/fontello.css" /}
+<!--[if lte IE 7]>
+{eyou:static file="skin/css/fontello-ie7.min.css" /}
+<![endif]-->
+{eyou:static file="skin/css/style.css" /}
+</head>
+<body>
+
+
+标签主页模板文件，若要使用请自行添加代码标签
+
+
+{eyou:static file="skin/js/bootstrap.js" /}
+{eyou:static file="skin/js/jquery-ias.min.js" /}
+{eyou:static file="skin/js/traveler.js" /}
+
+<script type="text/javascript">
+var ias = $.ias({
+    container: ".posts", 
+    item: ".content", 
+    pagination: ".post-read-more",
+    next: ".post-read-more a", 
+});
+
+ias.extension(new IASTriggerExtension({
+    text: '加载更多', 
+    offset: 1, 
+}));
+ias.extension(new IASSpinnerExtension());
+ias.extension(new IASNoneLeftExtension({
+    text: '<a>没有更多了</a>',
+}));
+</script> 
+<script type="text/javascript">
+$(function(){var win_width=$(window).width();var wrap_width=$('#wrap').width();var totop_width=$('#totop').width();var totop_posi=([win_width-wrap_width]/25-totop_width);$('#totop').css({'right':totop_posi});$(window).scroll(function(){if($(window).scrollTop()>=200){$('#totop').slideDown(200)}else{$('#totop').slideUp(200)}});$('#totop').click(function(){$('body,html').animate({scrollTop:0},200)})});
+</script> 
+{eyou:static file="skin/js/jquery.lazyload.min.js" /}
+<script type="text/javascript">
+jQuery(function() {         
+    jQuery("img").lazyload({effect : "fadeIn",failure_limit : 10 ,threshold : 50 ,}); });
+ias.on('rendered', function(items) {
+  $("img.lazy").lazyload({effect : "fadeIn",failure_limit : 10 ,threshold : 50 ,});
+})  
+</script> 
+ 
+<script>
+window.jui = {
+  uri: '/wp-content/themes/traveler2',
+  roll: 0}
+</script> 
+{eyou:static file="skin/js/affix.js" /}
+{eyou:static file="skin/js/wp-embed.min.js" /}
+</body>
+</html>

@@ -1,0 +1,42 @@
+<div id="sitetopbar">
+    <div class="site-logo">
+      <h1><a href="{eyou:global name='web_cmsurl' /}/" > <img src="{eyou:global name='web_logo' /}" alt="{eyou:global name='cfg_webname' /}"> </a></h1>
+    </div>
+    <div class="site-logo-m">
+      <h1><a href="{eyou:global name='web_cmsurl' /}/"><img src="{eyou:global name='web_logo' /}" alt="{eyou:global name='cfg_webname' /}"></a></h1>
+    </div>
+    <div role="navigation"  class="site-nav left-menu">
+      <h1 class="minimenu-text"><i class="icon-align-justify"></i></h1>
+      <ul id="menu-navigation" class="menu">
+        <li {eyou:eq name='$Request.param.m' value='Index'}class="current-menu-item"{/eyou:eq}><a href="{eyou:global name='web_cmsurl' /}/">首页</a></li>
+        {eyou:channel type="top" row="8" id="field" currentstyle="current-menu-item"}
+        <li class="{$field.currentstyle}"><a href="{$field.typeurl}">{$field.typename} 
+       {eyou:notempty name="$field.children"}<span class="sign "></span>{/eyou:notempty}
+         </a>
+          <ul {eyou:notempty name="$field.children"}class="sub-menu"{/eyou:notempty}>
+          {eyou:channel name="$field.children" row="100" id="field2"}
+             <li><a href="{$field2.typeurl}">{$field2.typename}</a></li>
+          {/eyou:channel}
+          </ul>
+        </li>
+        {/eyou:channel}
+      </ul>
+    </div>
+    <div class="social_a">
+      <p class="follow"><a class="mfp-follow-link big-link " href="javascript:;"><img class="sux-iconx26" src="{eyou:global name='web_attr_1' /}" alt="关注我们"><span class="followtext">关注我们</span></a></p>
+      <div class="reveal-modal" >
+        <div class="leftsocialmask"></div>
+        <div id="mfp-follow" class="white-popup">
+          <ul class="items clearfix">
+            <li class="item"> <a href="{eyou:global name='web_attr_2' /}" target="_blank" class="social_weibo" rel="nofollow" title="微博"><i class="icon-weibo"></i></a> </li>
+            <li class="item"> <a href="http://wpa.qq.com/msgrd?v=3&uin={eyou:global name='web_attr_3' /}&site=qq&menu=yes" target="_blank" class="social_qq" rel="nofollow" title="QQ"><i class="icon-qq"></i></a> </li>
+            <li class="item"> <a href="mailto:{eyou:global name='web_attr_4' /}" target="_blank" class="social_email" rel="nofollow" title="邮箱"><i class="icon-mail-alt"></i></a> </li>
+            <li class="item"> <a class="social_weixin" ><i class="icon-wechat"></i>
+              <div class="chat-tips"> <img style="width:150px;height:150px;" src="{eyou:global name='web_attr_5' /}" alt="微信订阅号"/></div>
+              </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+  </div>

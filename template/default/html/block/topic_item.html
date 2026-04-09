@@ -1,0 +1,9 @@
+<div class="vod-item"> <a class="vod-item-img shining" href="{$vo|mac_url_topic_detail}">
+          <div class="img-wrapper lazyload" data-original="{$vo.topic_pic|mac_url_img}"></div>
+          </a>
+          <div class="vod-item-info">
+            <h3 class="vod-item-title text-row-1 text-row-xs-2"><a href="{$vo|mac_url_topic_detail}"{if !empty($vo.topic_color)} style="color:#{$vo.topic_color};"{/if}>{$vo.topic_name}</a></h3>
+            <div class="vod-item-desc">
+              <p class="text-row-1">—— 收录{if !empty($vo.topic_rel_vod)}{$vo.topic_rel_vod|explode=',',###|count}{else/}0{/if}个影片 ——</p></div>
+          </div>
+        </div>

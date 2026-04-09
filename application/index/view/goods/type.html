@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>商品列表 - {$maccms.seo.site_name|default="商城"}</title>
+</head>
+<body>
+<h1>商品列表</h1>
+
+<div>
+    当前分类 ID：{$param.id|default='全部'}
+</div>
+
+<ul>
+    {maccms:goods num="20" paging="yes" pageurl="goods/type"}
+    <li>
+        <a href="{:mac_url('goods/detail',[],$vo)}" title="{$vo.goods_name}">
+            {$vo.goods_name}
+        </a>
+        <span>价格：<strong>{$vo.goods_price|default='0.00'}</strong></span>
+        <span>销量：{$vo.goods_sales|default='0'}</span>
+        <span>库存：{$vo.goods_stock|default='0'}</span>
+    </li>
+    {/maccms:goods}
+</ul>
+
+{if condition="isset($__PAGING__) && $__PAGING__['record_total'] gt 0"}
+<div class="mac_pages">
+    <div class="page_tip">
+        共{$__PAGING__.record_total}条数据, 当前{$__PAGING__.page_current}/{$__PAGING__.page_total}页
+    </div>
+    <div class="page_info">
+        <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',1,###}" title="首页">首页</a>
+        <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_prev,###}" title="上一页">上一页</a>
+        {maccms:foreach name="$__PAGING__.page_num" id="num"}
+        {if condition="$__PAGING__['page_current'] eq $num"}
+        <a class="page_link page_current" href="javascript:;" title="第{$num}页">{$num}</a>
+        {else}
+        <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',$num,###}" title="第{$num}页">{$num}</a>
+        {/if}
+        {/maccms:foreach}
+        <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_next,###}" title="下一页">下一页</a>
+        <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_total,###}" title="尾页">尾页</a>
+    </div>
+</div>
+{/if}
+
+</body>
+</html>
+

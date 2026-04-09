@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="detail-box art-detail-box gap">
+  <div class="detail-box-bg blur" style="background-image:url({$obj.art_pic|mac_url_img});"></div>
+  <div class="max-container">
+    <div class="position hidden-xs hidden-sm hidden-md"> <a href="{$maccms.path}">首页</a> {if !empty($obj.type_id_1)} <span><i class="fa fa-angle-right"></i></span> <a href="{$obj.type_1|mac_url_type}">{$obj.type_1.type_name}</a> {/if} <span><i class="fa fa-angle-right"></i></span> <a href="{$obj.type|mac_url_type}">{$obj.type.type_name}</a> </div>
+  </div>
+  <div class="art-info max-container">
+    <h1 class="art-title">{$obj.art_name}</h1>
+    <p><i class="fa fa-clock-o"></i>&nbsp;{$obj.art_time|date="Y-m-d",###}<em class="splite"></em><i class="fa fa-eye"></i>&nbsp;阅读：<span class="mac_hits hits" data-id="{$obj.art_id}" data-mid="{$maccms.mid}" data-type="hits">{$obj.art_hits}</span><em class="splite"></em><a class="ewave-digg" href="javascript:;" data-id="{$obj.art_id}" data-mid="{$maccms.mid}" data-type="up"><i class="fa fa-thumbs-o-up"></i>&nbsp;点赞：<span class="ewave-digg-num">{$obj.art_up}</span></a></p>
+  </div>
+</div>
+<div class="container-fluid max-container">
+  <div class="row">
+    <div class="col-xl-2 ewave-sticky gap hidden-xs hidden-sm hidden-md hidden-lg">
+      <div class="side-menu art-side-menu">
+        {include file="block/side_menu"}
+      </div>
+    </div>
+    <div class="col-xl-7 art-detail-main">
+      <div class="layout-box gap">
+        <div class="art-detail-content">
+          {$obj.art_page_list[$param['page']]['content']|mac_url_content_img}
+        </div>
+        {if $__PAGING__.page_total gt 1}
+        {include file="block/paging"}
+        {/if}
+        <div class="art-detail-tag ewave-swiper ewave-swiper-nav">
+          <ul class="swiper-wrapper">
+            {if !empty($obj.type_id_1)}
+            <li class="swiper-slide"><a href="{$obj.type_1|mac_url_type}">{$obj.type_1.type_name}</a></li>
+            {/if}
+            <li class="swiper-slide"><a href="{$obj.type|mac_url_type}">{$obj.type.type_name}</a></li>
+            {if !empty($obj.art_tag)}
+            {maccms:foreach name=":explode(',',$obj.art_tag)"}
+            <li class="swiper-slide"><a href="{:mac_url('art/search',['tag'=>$vo])}">{$vo}</a></li>
+            {/maccms:foreach}
+            {/if}
+          </ul>
+        </div>
+      </div>
+      {if !empty($obj.art_rel_vod)}
+      <div class="box layout-box gap tv">
+        <div class="box-head clearfix">
+          <h3 class="box-head-title"><i class="fa fa-tv"></i>&nbsp;<span>相关视频</span></h3>
+        </div>
+        <div class="search-list">
+          {maccms:vod num="5" ids="'.$obj['art_rel_vod'].'" by="time" order="desc"}
+          {include file="block/vod_item_info"}
+          {/maccms:vod}
+        </div>
+      </div>
+      {/if}
+      {if !empty($obj.art_rel_art)}
+      <div class="box layout-box gap cartoon">
+        <div class="box-head clearfix">
+          <h3 class="box-head-title"><i class="fa fa-file-text-o"></i>&nbsp;<span>相关资讯</span></h3>
+        </div>
+        <div class="art-list">
+          {maccms:art num="5" ids="'.$obj['art_rel_art'].'" by="time" order="desc"}
+          {include file="block/art_item"}
+          {/maccms:art}
+        </div>
+      </div>
+      {/if}
+      {include file="block/comment"}
+    </div>
+    <div class="col-xl-3 ewave-sticky art-detail-sticky gap cartoon">
+      <div class="box ranking-box">
+        <div class="box-head">
+          <h3 class="box-head-title">&nbsp;<i class="fa fa-fire"></i>&nbsp;<span>热门{$obj.type.type_name}</span></h3>
+        </div>
+        <ul class="ranking-list">
+          {maccms:art num="10" type="current" by="hits_week" order="desc"}
+          {include file="block/art_item_ranking_text"}
+          {/maccms:art}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>

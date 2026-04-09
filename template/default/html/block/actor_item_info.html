@@ -1,0 +1,17 @@
+<div class="search-item row">
+            <div class="col-xs-4 col-md-3 col-lg-2">
+              <a class="search-item-cover shining" href="{$vo|mac_url_actor_detail}" title="{$vo.actor_name}">
+              <div class="img-wrapper lazyload" data-original="{$vo.actor_pic|mac_url_img}"></div>
+              </a>
+            </div>
+            <div class="col-xs-8 col-md-9 col-lg-10">
+              <div class="search-item-info"> 
+                <h2 class="search-item-title text-row-2"><a href="{$vo|mac_url_actor_detail}" title="{$vo.actor_name}"{if !empty($vo.actor_color)} style="color:#{$vo.actor_color};"{/if}>{$vo.actor_name|str_replace=array($param.wd,$param.actor,$param.director,$param.area,$param.lang,$param.year,$param.class,$param.tag),array('<span class="text-theme">'.$param.wd.'</span>','<span class="text-theme">'.$param.actor.'</span>','<span class="text-theme">'.$param.director.'</span>','<span class="text-theme">'.$param.area.'</span>','<span class="text-theme">'.$param.lang.'</span>','<span class="text-theme">'.$param.year.'</span>','<span class="text-theme">'.$param.class.'</span>','<span class="text-theme">'.$param.tag.'</span>'),###}</a></h2>
+                 <ul class="search-item-desc">
+                  <li>{if !empty($vo.actor_year)}{$vo.actor_year|str_replace=array($param.wd,$param.actor,$param.director,$param.area,$param.lang,$param.year,$param.class,$param.tag),array('<span class="text-theme">'.$param.wd.'</span>','<span class="text-theme">'.$param.actor.'</span>','<span class="text-theme">'.$param.director.'</span>','<span class="text-theme">'.$param.area.'</span>','<span class="text-theme">'.$param.lang.'</span>','<span class="text-theme">'.$param.year.'</span>','<span class="text-theme">'.$param.class.'</span>','<span class="text-theme">'.$param.tag.'</span>'),###}&nbsp;/&nbsp;{/if}{$vo.actor_area|str_replace=array($param.wd,$param.actor,$param.director,$param.area,$param.lang,$param.year,$param.class,$param.tag),array('<span class="text-theme">'.$param.wd.'</span>','<span class="text-theme">'.$param.actor.'</span>','<span class="text-theme">'.$param.director.'</span>','<span class="text-theme">'.$param.area.'</span>','<span class="text-theme">'.$param.lang.'</span>','<span class="text-theme">'.$param.year.'</span>','<span class="text-theme">'.$param.class.'</span>','<span class="text-theme">'.$param.tag.'</span>'),###}</li>
+                  <li class="text-row-3 text-row-xs-2 text-row-xl-2"><span class="hidden-xs">简介：</span>{$vo.actor_blurb|str_replace=array($param.wd,$param.actor,$param.director,$param.area,$param.lang,$param.year,$param.class,$param.tag),array('<span class="text-theme">'.$param.wd.'</span>','<span class="text-theme">'.$param.actor.'</span>','<span class="text-theme">'.$param.director.'</span>','<span class="text-theme">'.$param.area.'</span>','<span class="text-theme">'.$param.lang.'</span>','<span class="text-theme">'.$param.year.'</span>','<span class="text-theme">'.$param.class.'</span>','<span class="text-theme">'.$param.tag.'</span>'),###|default="未知"}</li>
+                </ul>
+                <div class="search-item-btn"> <a href="{$vo|mac_url_actor_detail}"><i class="fa fa-play-circle-o"></i>&nbsp;查看详情</a> </div>
+              </div>
+            </div>
+          </div>

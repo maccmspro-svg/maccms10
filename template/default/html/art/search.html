@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="container">
+  <div class="row cartoon">
+    <div class="col-xs-12 col-lg-8 gap ewave-sticky">
+      <div class="box layout-box search-box">
+        <div class="box-head clearfix">
+          <h3 class="box-head-title mr-5"><i class="fa fa-search"></i><span>&nbsp;搜索&nbsp;<span class="search-wd">{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}{$param.tag}</span></span></h3>
+          {include file="block/search_tab"}
+        </div>
+        <div class="art-list">
+          {maccms:art num="10" paging="yes" half="3" by="time" order="desc" pageurl="art/search"}
+          {include file="block/art_item"}
+          {/maccms:art}
+        </div>
+        {include file="block/paging"}
+      </div>
+    </div>
+    <div class="col-xs-12 col-lg-4 gap hidden-xs hidden-sm hidden-md ewave-sticky">
+        <div class="box ranking-box">
+          <div class="box-head">
+            <h3 class="box-head-title">&nbsp;<i class="fa fa-fire"></i>&nbsp;<span>热门资讯</span></h3>
+          </div>
+          <ul class="ranking-list">
+            {maccms:art num="10" by="hits_week" order="desc"}
+            {include file="block/art_item_ranking_text"}
+            {/maccms:art}
+          </ul>
+        </div>
+      </div>
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>

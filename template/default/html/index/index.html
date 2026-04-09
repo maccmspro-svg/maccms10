@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="container">
+  <div class="slide slide-index layout-box gap ewave-swiper ewave-swiper-image" data-effect="fade">
+    <ul class="swiper-wrapper">
+      {maccms:goods num="3" level="9" by="time" order="desc"}
+      <li class="swiper-slide clearfix">
+        <a class="slide-item swiper-lazy img-wrapper shining" href="{:mac_url('goods/detail',['id'=>$vo.goods_id])}" data-background="{if !empty($vo.goods_pic_slide)}{$vo.goods_pic_slide|mac_url_img}{else/}{$vo.goods_pic|mac_url_img}{/if}"><span class="slide-item-title">{$vo.goods_name}</span></a>
+        <div class="slide-small hidden-xs hidden-sm hidden-md">
+          {include file="block/goods_item_slide"}
+        </div>
+      </li>
+      {/maccms:goods}
+    </ul>
+    <div class="swiper-pagination"></div>
+  </div>
+  <div class="box gap shop">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><a href="{:mac_url('goods/index')}"><i class="fa fa-shopping-cart"></i>&nbsp;<span>商城精选</span></a></h3>
+      <a class="box-head-more" href="{:mac_url('goods/index')}">进入商城&nbsp;<i class="fa fa-angle-right"></i></a>
+    </div>
+    <div class="vod-list goods-list">
+      <div class="row">
+        {maccms:goods num="12" by="time" order="desc"}
+        <div class="col-xs-4 col-lg-3{if $key gt 8} hidden-xs hidden-sm hidden-md{/if}{if $key gt 10} hidden-lg{/if}">
+          {include file="block/goods_item"}
+        </div>
+        {/maccms:goods}
+      </div>
+    </div>
+  </div>
+  {maccms:type ids="parent" flag="vod" by="sort" order="asc" id="type" key="key_type"}
+  <div class="box gap{if $type.type_id==1||$type.type_name=='电影'} movie{elseif $type.type_id==3||$type.type_name=='综艺'/} show{elseif $type.type_id==4||$type.type_name=='动漫'/} cartoon{else/} tv{/if}">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><a href="{$type|mac_url_type}"><i class="fa fa-{if $type.type_id==1||$type.type_name=='电影'}film{elseif $type.type_id==3||$type.type_name=='综艺'/}coffee{elseif $type.type_id==4||$type.type_name=='动漫'/}paw{else/}tv{/if}"></i>&nbsp;<span>{$type.type_name}</span></a></h3>
+      <a class="box-head-more" href="{$type|mac_url_type}">更多&nbsp;<i class="fa fa-angle-right"></i></a>
+      {if !empty($type.childids)}
+      <div class="box-head-type ewave-swiper ewave-swiper-nav hidden-xs hidden-sm hidden-md">
+        <ul class="swiper-wrapper">
+          {maccms:type ids="child" parent="'.$type['type_id'].'" by="sort" order="asc"}
+          <li class="swiper-slide"><a href="{$vo|mac_url_type}">{$vo.type_name}</a></li>
+          {/maccms:type}
+        </ul>
+      </div>
+      {/if}
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-xl-9">
+        <div class="vod-list">
+          <div class="row">
+            {maccms:vod num="8" type="'.$type['type_id'].'" by="time" order="desc"}
+            <div class="col-xs-4 col-lg-3{if $key gt 6} hidden-xs hidden-sm hidden-md{/if}{if $key gt 8} hidden-lg{/if}"> {include file="block/vod_item"} </div>
+            {/maccms:vod}
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-xl-3 gap hidden-xs hidden-sm hidden-md hidden-lg">
+        <div class="box ranking-box">
+          <div class="box-head">
+            <h3 class="box-head-title">&nbsp;<i class="fa fa-fire"></i>&nbsp;<span>热门{$type.type_name}</span></h3>
+          </div>
+          <ul class="ranking-list vod-ranking-list">
+            {maccms:vod num="10" type="'.$type['type_id'].'" by="hits_week" order="desc"}
+            {if condition="$key elt 3"}
+            {include file="block/vod_item_ranking"}
+            {else/}
+            {include file="block/vod_item_ranking_text"}
+            {/if}
+            {/maccms:vod}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  {/maccms:type}
+  {if mac_data_count(0,'all','art')}
+  <div class="box gap cartoon">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><a href="{:mac_url_art_index()}"><i class="fa fa-file-text-o"></i>&nbsp;<span>影视资讯</span></a></h3>
+      <a class="box-head-more" href="{:mac_url_art_index()}">更多&nbsp;<i class="fa fa-angle-right"></i></a>
+      <div class="box-head-type ewave-swiper ewave-swiper-nav hidden-xs hidden-sm hidden-md">
+        <ul class="swiper-wrapper">
+          {maccms:type flag="art" by="sort" order="asc"}
+          <li class="swiper-slide"><a href="{$vo|mac_url_type}">{$vo.type_name}</a></li>
+          {/maccms:type}
+        </ul>
+      </div>
+     </div>
+    <div class="row">
+      <div class="col-xs-12 col-lg-8 gap">
+        <div class="art-list"> 
+          {maccms:art num="5" by="time" order="desc"}
+          {include file="block/art_item"}
+          {/maccms:art}
+        </div>
+      </div>
+      <div class="col-xs-12 col-lg-4 hidden-xs hidden-sm hidden-md gap">
+        <div class="box ranking-box">
+          <div class="box-head">
+            <h3 class="box-head-title">&nbsp;<i class="fa fa-fire"></i>&nbsp;<span>热门资讯</span></h3>
+          </div>
+          <ul class="ranking-list">
+            {maccms:art num="10" by="hits_week" order="desc"}
+            {include file="block/art_item_ranking_text"}
+            {/maccms:art}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  {/if}
+  {if mac_data_count(0,'all','actor')}
+  <div class="box gap show">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><a href="{:mac_url_actor_index()}"><i class="fa fa-heart-o"></i>&nbsp;<span>影视明星</span></a></h3>
+      <a class="box-head-more" href="{:mac_url_actor_index()}">更多&nbsp;<i class="fa fa-angle-right"></i></a>
+      {if !empty($type.childids)}
+      <div class="box-head-type ewave-swiper ewave-swiper-nav hidden-xs hidden-sm hidden-md">
+        <ul class="swiper-wrapper">
+          {maccms:type mid="8" by="sort" order="asc"}
+          <li class="swiper-slide"><a href="{$vo|mac_url_type}">{$vo.type_name}</a></li>
+          {/maccms:type}
+        </ul>
+      </div>
+      {/if}
+    </div>
+    <div class="vod-list actor-list">
+      <div class="row">
+        {maccms:actor num="6" by="time" order="desc"}
+        <div class="col-xs-4 col-lg-3 col-xl-2{if $key gt 4} hidden-lg{/if}">
+          {include file="block/actor_item"}
+        </div>
+        {/maccms:actor}
+      </div>
+    </div>
+  </div>
+  {/if}
+  {if mac_data_count(0,'all','topic')}
+  <div class="box gap movie">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><a href="{:mac_url_topic_index()}"><i class="fa fa-bookmark-o"></i>&nbsp;<span>影视专题</span></a></h3>
+      <a class="box-head-more" href="{:mac_url_topic_index()}">更多&nbsp;<i class="fa fa-angle-right"></i></a>
+    </div>
+    <div class="vod-list topic-list">
+      <div class="row">
+        {maccms:topic num="6" by="time" order="desc" key="key_topic"}
+        <div class="col-xs-12 col-md-6 col-xl-4{if $key_topic gt 4} hidden-xs hidden-sm hidden-md{/if}">
+          {include file="block/topic_item"}
+        </div>
+        {/maccms:topic}
+      </div>
+    </div>
+  </div>
+  {/if}
+  <div class="box gap cartoon">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><i class="fa fa-link"></i>&nbsp;<span>友情链接</span></h3>
+    </div>
+    <div class="link-list">
+      {maccms:link num="120" by="time" order="asc" key="key_topic"}
+      <a class="link-item" href="{$vo.link_url}" target="_blank">{$vo.link_name}</a>
+      {/maccms:link}
+    </div>
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>

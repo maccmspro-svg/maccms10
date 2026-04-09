@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>{$obj.goods_name|default='商品详情'} - {$maccms.seo.site_name|default="商城"}</title>
+</head>
+<body>
+{if condition="!empty($obj)"}
+<h1>{$obj.goods_name}</h1>
+
+{if condition="!empty($obj.goods_pic)"}
+<p>
+    <img src="{:mac_url_img($obj.goods_pic)}" alt="{$obj.goods_name}" style="max-width: 200px;">
+</p>
+{/if}
+
+<p>价格：<strong>{$obj.goods_price|default='0.00'}</strong></p>
+<p>库存：{$obj.goods_stock|default='0'}　销量：{$obj.goods_sales|default='0'}</p>
+
+{if condition="!empty($obj.goods_blurb)"}
+<p>{$obj.goods_blurb}</p>
+{/if}
+
+{if condition="!empty($obj.goods_content)"}
+<div>{$obj.goods_content|raw}</div>
+{/if}
+
+{if condition="$can_buy"}
+<p>
+    <a href="{:mac_url('goods/buy',[],$obj)}">立即购买</a>
+</p>
+{else/}
+<p>当前会员组暂无购买权限，请先 <a href="{:mac_url('user/upgrade')}">升级会员</a> 或 <a href="{:mac_url('user/login')}">登录</a>。</p>
+{/if}
+
+{else/}
+<p>未找到商品信息。</p>
+{/if}
+
+</body>
+</html>
+

@@ -1,0 +1,35 @@
+<div class="fixed">
+  <div class="fixed-item skin-switch hidden-xs hidden-sm hidden-md">
+    <a class="light" href="javascript:;"><span class="fixed-item-text">亮色模式</span><i class="fa fa-sun-o"></i></a>
+    <a class="dark" href="javascript:;"><span class="fixed-item-text">暗色模式</span><i class="fa fa-moon-o"></i></a>
+  </div>
+  {if $GLOBALS.config.gbook.status==1}
+  <div class="fixed-item hidden-xs hidden-sm hidden-md"><a href="{:mac_url('gbook/index')}"><span class="fixed-item-text">留言反馈</span><i class="fa fa-commenting-o"></i></a></div>
+  {/if}
+  <div class="fixed-item goTop ewave-backtop"><span class="fixed-item-text">返回顶部</span><i class="fa fa-angle-up"></i></div>
+</div>
+<footer class="footer">
+  <ul class="footer-link gap">
+    {if $GLOBALS.config.gbook.status==1}
+    <li><a href="{:mac_url('gbook/index')}">在线留言</a></li>
+    {/if}
+    <li><a href="{:mac_url('label/new')}">最近更新</a></li>
+    <li><a href="{:mac_url('label/ranking')}">排行榜</a></li>
+    <li><a href="{:mac_url('map/index')}">网站地图</a></li>
+  </ul>
+  <ul class="footer-link gap">
+    <li><a href="{:mac_url('rss/index')}" target="_blank">RSS订阅</a></li>
+    <li><a href="{:mac_url('rss/baidu')}" target="_blank">Baidu</a></li>
+    <li><a href="{:mac_url('rss/google')}" target="_blank">Google</a></li>
+    <li><a href="{:mac_url('rss/bing')}" target="_blank">Bing</a></li>
+    <li><a href="{:mac_url('rss/so')}" target="_blank">360</a></li>
+    <li><a href="{:mac_url('rss/sogou')}" target="_blank">Sogou</a></li>
+    <li><a href="{:mac_url('rss/sm')}" target="_blank">神马</a></li>
+  </ul>
+  <div class="footer-text">
+    <p>本网站只提供web页面服务，通过链接的方式提供相关内容（所有视频内容收集于各大视频网站），本站不对链接内容具有进行编辑、整理、修改等权利</p>
+    <p>合作邮箱：{$maccms.site_email}  备案号：<a href="http://beian.miit.gov.cn/" rel="nofollow" target="_blank">{$maccms.site_icp}</a></p>
+    <p>&copy;copyright 2020-{:date(Y)} {$maccms.site_name} {$maccms.site_url}</p>
+  </div>
+  <div class="bottom-placeholder"></div>
+</footer>

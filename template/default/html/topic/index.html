@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="container">
+  {if mac_data_count(0,'all','topic')}
+  <div class="box gap movie">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><i class="fa fa-bookmark-o"></i>&nbsp;<span>影视专题&nbsp;<small>第{$param.page}页</small></span></h3>
+    </div>
+    <div class="vod-list topic-list">
+      <div class="row">
+        {maccms:topic num="12" paging="yes" by="time" order="desc" key="key_topic"}
+        <div class="col-xs-12 col-md-6 col-xl-4">
+          {include file="block/topic_item"}
+        </div>
+        {/maccms:topic}
+      </div>
+      {include file="block/paging"}
+    </div>
+  </div>
+  {/if}
+</div>
+{include file="block/foot"}
+</body>
+</html>

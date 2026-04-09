@@ -1,0 +1,18 @@
+{if $GLOBALS.config.comment.status==1}
+          <div class="box layout-box gap" id="comments">
+            <div class="box-head clearfix">
+              <h3 class="box-head-title"><i class="fa fa-commenting-o"></i>&nbsp;<span>用户评论</span></h3>
+            </div>
+            <div class="ewave-comment" data-id="{$obj.vod_id}{$obj.art_id}{$obj.actor_id}{$obj.role_id}{$obj.website_id}{$obj.topic_id}" data-mid="{if $maccms.mid==10}1{else/}{$maccms.mid}{/if}">
+                <div class="ewave-empty"><i class="fa fa-refresh fa-spin"></i>&nbsp;正在加载</div>
+              </div>
+              <script>
+              $(function(){
+                eWave.Comment.Login = {$comment.login};
+                eWave.Comment.Verify = {$comment.verify};
+                eWave.Comment.Init();
+                eWave.Comment.Show(1);
+              });
+              </script>
+          </div>
+          {/if}

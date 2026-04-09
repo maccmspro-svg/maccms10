@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+{include file="block/vod_detail_info"}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-xl-9">
+      <div class="box layout-box gap movie">
+        <div class="box-head clearfix">
+          <h3 class="box-head-title mr-10"><i class="fa fa-list-ul"></i>&nbsp;<span>分集剧情</span></h3>
+          <a class="box-head-more ewave-sort ml-10" href="javascript:;" data-target=".ewave-playlist-sort-content:visible"><span><i class="fa fa-sort-amount-asc"></i></span>&nbsp;排序</a>
+        </div>
+        <div class="episode-box scrollbar">
+          <ul class="row ewave-tab-content ewave-playlist-content ewave-playlist-sort-content">
+          {maccms:foreach name="$obj.vod_plot_list" id="vo2"}
+          <li class="col-xs-4 col-sm-3 col-md-2 ewave-playlist-item{if $param.page==$key} active{/if}{if count($obj.vod_plot_list) lt 6} ewave-width-auto{/if}"><a class="text-overflow" href="{:mac_url_plot_detail($obj,['page'=>$key])}">第{$key}集</a></li>
+          {/maccms:foreach}
+          </ul>
+        </div>
+      </div>
+      <div class="box layout-box gap">
+        <h2 class="plot-detail-title">{$obj['vod_plot_list'][$param['page']]['name']|default='第'.$param.page.'集 剧情介绍'}</h2>
+        <div class="plot-detail-content">{$obj['vod_plot_list'][$param['page']]['detail']|mac_url_content_img}</div>
+        <div class="plot-detail-foot">
+          {if $param.page gt 1}
+          <a href="{:mac_url_plot_detail($obj,['page'=>$param.page-1])}"><i class="fa fa-angle-left"></i>&nbsp;上一集剧情(第{$param.page-1}集)</a>
+          {else/}
+          <a class="disabled" href="javascript:eWave.Layer.Error('没有上一集啦~')"><i class="fa fa-angle-left"></i>&nbsp;上一集剧情</a>
+          {/if}
+          {if $param.page lt count($obj.vod_plot_list)}
+          <a href="{:mac_url_plot_detail($obj,['page'=>$param.page+1])}">下一集剧情(第{$param.page+1}集)&nbsp;<i class="fa fa-angle-right"></i></a>
+          {else/}
+          <a class="disabled" href="javascript:eWave.Layer.Error('没有下一集啦~')">下一集剧情&nbsp;<i class="fa fa-angle-right"></i></a>
+          {/if}
+        </div>
+      </div>
+      {include file="block/comment"}
+    </div>
+    <div class="col-xs-12 col-xl-3 hidden-xs hidden-sm hidden-md hidden-lg movie ewave-sticky gap">
+      <div class="box ranking-box">
+          <div class="box-head">
+            <h3 class="box-head-title">&nbsp;<i class="fa fa-fire"></i>&nbsp;<span>热门{$obj.type.type_name}</span></h3>
+          </div>
+          <ul class="ranking-list vod-ranking-list">
+            {maccms:vod num="10" type="current" by="hits_week" order="desc"}
+            {if condition="$key elt 3"}
+            {include file="block/vod_item_ranking"}
+            {else/}
+            {include file="block/vod_item_ranking_text"}
+            {/if}
+            {/maccms:vod}
+          </ul>
+        </div>
+    </div>
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>

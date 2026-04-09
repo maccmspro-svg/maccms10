@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="container">
+  <div class="box gap shop layout-box goods-order-card">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><i class="fa fa-list-alt"></i>&nbsp;<span>订单信息</span></h3>
+      <a class="box-head-more" href="{:mac_url('goods/index')}">继续购物&nbsp;<i class="fa fa-angle-right"></i></a>
+    </div>
+
+    {if condition="isset($order) && $order.go_id gt 0"}
+    <div class="layout-box">
+      <p style="margin:8px 0;"><strong>订单编号：</strong>{$order.go_code}</p>
+      <p style="margin:8px 0;"><strong>商品 ID：</strong>{$order.goods_id}</p>
+      <p style="margin:8px 0;"><strong>数量：</strong>{$order.go_num}</p>
+      <p style="margin:8px 0;"><strong>应付金额：</strong><span class="goods-item-price">￥{$order.go_price}</span></p>
+      {if condition="$order.go_points gt 0"}
+      <p style="margin:8px 0;"><strong>积分：</strong>{$order.go_points}</p>
+      {/if}
+      <p style="margin:8px 0;"><strong>支付方式：</strong>{$order.go_pay_type}</p>
+      <p style="margin:8px 0;">
+        <strong>支付状态：</strong>
+        {if condition="$order.go_status eq 1"}<span class="order-status-paid">已支付</span>
+        {elseif condition="$order.go_status eq 0"/}<span class="order-status-wait">待支付</span>
+        {else/}<span>已关闭</span>{/if}
+      </p>
+      {if condition="$order.go_goods_kind eq 2"}
+      <p style="margin:8px 0;"><strong>类型：</strong>实体商品</p>
+      {if condition="$order.go_status eq 1"}
+      <p style="margin:8px 0;"><strong>收货人：</strong>{$order.go_receiver_name|default=''} &nbsp; {$order.go_receiver_phone|default=''}</p>
+      <p style="margin:8px 0;"><strong>收货地址：</strong>{$order.go_receiver_region|default=''} {$order.go_receiver_address|default=''}</p>
+      <p style="margin:8px 0;">
+        <strong>物流：</strong>
+        {if condition="$order.go_ship_status eq 1"}
+        {$order.go_express_name|default=''} &nbsp; {$order.go_express_no|default=''}
+        {if condition="$order.go_ship_time gt 0"}<span style="color:var(--text-color-2);">（{$order.go_ship_time|mac_day}）</span>{/if}
+        {else/}<span class="order-status-wait">待发货</span>{/if}
+      </p>
+      {/if}
+      {else/}
+      <p style="margin:8px 0;"><strong>类型：</strong>虚拟商品</p>
+      {if condition="$order.go_status eq 1 && $order.go_ship_status eq 1"}
+      <div style="margin:12px 0;padding:12px;background:var(--bg-color-2);border-radius:6px;">
+        <strong>已发放内容：</strong>
+        <div class="goods-download-body" style="margin-top:8px;white-space:pre-wrap;word-break:break-all;">{$order.go_download_snapshot|default='（暂无内容，请联系客服）'}</div>
+      </div>
+      {/if}
+      {/if}
+    </div>
+    {elseif condition="isset($obj.goods_id)"}
+    <div class="layout-box">
+      <p style="margin:8px 0;"><strong>{$obj.goods_name}</strong>
+        {if condition="isset($obj.goods_kind) && $obj.goods_kind eq 2"}<span style="margin-left:8px;padding:2px 8px;border-radius:4px;background:#1e9fff;color:#fff;font-size:12px;">实体</span>{else/}<span style="margin-left:8px;padding:2px 8px;border-radius:4px;background:#16b777;color:#fff;font-size:12px;">虚拟</span>{/if}
+      </p>
+      <p style="margin:8px 0;">单价：￥{$obj.goods_price} &nbsp; 积分：{$obj.goods_points|default='0'}</p>
+      <form method="post" action="{:mac_url('goods/buy',$param)}">
+        <input type="hidden" name="num" value="1">
+        <div class="form-row">
+          <label>支付方式</label>
+          <select name="payment">
+            {if condition="$obj.goods_points gt 0"}
+            <option value="points">积分支付（需 {$obj.goods_points} 积分）</option>
+            {/if}
+            <option value="alipay">支付宝</option>
+            <option value="weixin">微信</option>
+            <option value="epay">易支付</option>
+          </select>
+        </div>
+        {if condition="isset($obj.goods_kind) && $obj.goods_kind eq 2"}
+        <div class="form-row">
+          <label>收货地址</label>
+          {if condition="empty($address_list)"}
+          <p style="color:#c00;margin:0;">请先 <a href="{:mac_url('user/user_address')}">添加收货地址</a></p>
+          {else/}
+          <select name="ua_id" required>
+            <option value="">请选择</option>
+            {volist name="address_list" id="ad"}
+            <option value="{$ad.ua_id}">{$ad.ua_name} {$ad.ua_phone} {$ad.ua_region} {$ad.ua_address}{if condition="$ad.ua_is_default eq 1"} [默认]{/if}</option>
+            {/volist}
+          </select>
+          {/if}
+        </div>
+        {/if}
+        <p style="margin-top:16px;">
+          {if condition="isset($obj.goods_kind) && $obj.goods_kind eq 2 && empty($address_list)"}
+          <button type="button" class="goods-buy-btn" style="opacity:.5;cursor:not-allowed;" disabled>请先添加地址</button>
+          {else/}
+          <button type="submit" class="goods-buy-btn">提交订单</button>
+          {/if}
+        </p>
+      </form>
+    </div>
+    {else/}
+    <div class="layout-box">
+      <p style="color:var(--text-color-2);">未找到订单或无权查看。请登录后从支付结果页进入，或确认订单号。</p>
+    </div>
+    {/if}
+    <p style="margin-top:16px;">
+      <a href="{:mac_url('goods/index')}">返回商城</a>
+      &nbsp;|&nbsp;
+      <a href="{:mac_url('user/index')}">会员中心</a>
+    </p>
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+<div id="wrapper">
+  {include file="block/header"}
+  <div id="main">
+    <div class="wrap">
+      <div class="breadcrumb"><span class="current">文章列表</span></div>
+      <div class="posts">
+        {maccms:art num="8" paging="yes" by="time" order="desc" pageurl="art/index"}
+        {include file="block/art_item"}
+        {/maccms:art}
+      </div>
+      {include file="block/paging"}
+    </div>
+  </div>
+  {include file="block/left"}
+</div>
+{include file="block/footer"}
+</body>
+</html>

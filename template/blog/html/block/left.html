@@ -1,0 +1,43 @@
+<div class="sidebar">
+  <div class="widget widget_suxingme_search">
+    <form class="search-form" method="get" action="{:mac_url('art/search')}">
+      <div class="search-input">
+        <input class="search-text" placeholder="要不找一找？" type="text" name="wd" value="{$param.wd|default=''}">
+        <input type="submit" value="　" class="search-button">
+      </div>
+    </form>
+  </div>
+
+  <div class="widget widget_suxingme_note">
+    <div class="widget-container">
+      <div class="widget_ad_title"><div class="ad-t">公告栏</div></div>
+      <ul>
+        {maccms:art num="4" by="time" order="desc"}
+        <li><a href="{$vo|mac_url_art_detail}"><i class="icon-lightbulb"></i><p>{$vo.art_name}({$vo.art_time|date='Y-m-d',###})</p></a></li>
+        {/maccms:art}
+      </ul>
+    </div>
+  </div>
+
+  <div class="widget widget_suxingme_hotpost">
+    <div class="w_title"><h3>30天最热点击文章</h3></div>
+    {maccms:art num="3" by="hits_month" order="desc"}
+    <li><a href="{$vo|mac_url_art_detail}" rel="bookmark" title="{$vo.art_name}">
+      <div class="overlay"></div>
+      <img src="{$vo.art_pic|mac_url_img}" alt="{$vo.art_name}" class="thumbnail"><span><i class="icon-eye"></i>{$vo.art_hits}</span>
+      <p class="title">{$vo.art_name}</p>
+    </a></li>
+    {/maccms:art}
+  </div>
+
+  <div class="widget widget_suxingme_mostviews">
+    <div class="w_title"><h3>随便看看</h3></div>
+    {maccms:art num="3" by="hits_week" order="desc"}
+    <li><a href="{$vo|mac_url_art_detail}" rel="bookmark" title="{$vo.art_name}">
+      <div class="overlay"></div>
+      <img src="{$vo.art_pic|mac_url_img}" alt="{$vo.art_name}" class="thumbnail"><span></span>
+      <p class="title">{$vo.art_name}</p>
+    </a></li>
+    {/maccms:art}
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="art-item clearfix"> <a class="art-item-cover shining" href="{$vo|mac_url_art_detail}" title="{$vo.art_name}">
+            <div class="img-wrapper lazyload" data-original="{$vo.art_pic|mac_url_img}" title="{$vo.art_name}"></div>
+            </a>
+            <div class="art-item-info">
+              <h3 class="art-item-title text-row-1 text-row-xs-3 text-row-sm-2"><a href="{$vo|mac_url_art_detail}" title="{$vo.art_name}">{if $maccms.aid==23}{$vo.art_name|str_replace=array($param.wd,$param.class,$param.tag),array('<span class="text-theme">'.$param.wd.'</span>','<span class="text-theme">'.$param.class.'</span>','<span class="text-theme">'.$param.tag.'</span>'),###}{else/}{$vo.art_name}{/if}</a></h3>
+              <div class="art-item-desc text-row-4 text-row-xs-2 text-row-sm-2 hidden-xs">{$vo.art_blurb|str_replace=array($param.wd,$param.class,$param.tag),array('<span class="text-theme">'.$param.wd.'</span>','<span class="text-theme">'.$param.class.'</span>','<span class="text-theme">'.$param.tag.'</span>'),###}</div>
+            </div>
+          </div>

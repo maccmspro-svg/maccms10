@@ -1,0 +1,142 @@
+{php}
+  $sexArray=explode(',','男,女,变性,保密');
+  if(!empty($GLOBALS['config']['app']['actor_extend_area'])) {
+    $areaArray=explode(',',$GLOBALS['config']['app']['actor_extend_area']);
+  }else{
+    $areaArray=explode(',','大陆,香港,台湾,美国,韩国,日本,泰国,新加坡,马来西亚,印度,英国,法国,加拿大,西班牙,俄罗斯,其他');
+  }
+  $bloodArray=explode(',','A型,B型,AB型,O型');
+  $starsignArray=explode(',','白羊座,金牛座,双子座,巨蟹座,狮子座,处女座,天枰座,天蝎座,射手座,摩羯座,水瓶座,双鱼座');
+  $letterArray=range('A','Z');
+  if(!empty($obj['childids'])){
+    $parent_obj=$obj;
+  }elseif(!empty($obj['parent'])){
+    $parent_obj=$obj['parent'];
+  }
+{/php}
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="container">
+  <div class="box layout-box filter-box gap">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><a href="javascript:;"><i class="fa fa-filter"></i>&nbsp;<span>筛选</span></a></h3>
+      <ul class="filter-selected-list clearfix hidden-xs hidden-sm hidden-md">
+        {if !empty($obj.type_pid)}
+        <li><a href="{:mac_url_type($obj.parent,['sex'=>$param.sex,'area'=>$param.area,'blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>$param.by],show)}">{$obj.parent.type_name}</a></li>
+        <li><a href="{:mac_url_type($obj.parent,['sex'=>$param.sex,'area'=>$param.area,'blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>$param.by],show)}">{$obj.type_name}&nbsp;<i class="fa fa-times"></i></a></li>
+        {else/}
+        <li><a href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>$param.area,'blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>$param.by],show)}">{$obj.type_name}</a></li>
+        {/if}
+        {if !empty($param.sex)}
+        <li><a href="{:mac_url_type($obj,['sex'=>'','area'=>$param.area,'blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>$param.by],show)}">{$param.sex}&nbsp;<i class="fa fa-times"></i></a></li>
+        {/if}
+        {if !empty($param.area)}
+        <li><a href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>'','blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>$param.by],show)}">{$param.area}&nbsp;<i class="fa fa-times"></i></a></li>
+        {/if}
+        {if !empty($param.blood)}
+        <li><a href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>$param.area,'blood'=>'','starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>$param.by],show)}">{$param.blood}&nbsp;<i class="fa fa-times"></i></a></li>
+        {/if}
+        {if !empty($param.starsign)}
+        <li><a href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>$param.area,'blood'=>$param.blood,'starsign'=>'','letter'=>$param.letter,'by'=>$param.by],show)}">{$param.starsign}&nbsp;<i class="fa fa-times"></i></a></li>
+        {/if}
+        {if !empty($param.letter)}
+        <li><a href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>$param.area,'blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>'','by'=>$param.by],show)}">{$param.letter}&nbsp;<i class="fa fa-times"></i></a></li>
+        {/if}
+      </ul>
+      <a class="box-head-more filter-more" href="{if !empty($obj.type_pid)}{:mac_url_type($obj.parent,[],show)}{else/}{:mac_url_type($obj,[],show)}{/if}">重选&nbsp;<i class="fa fa-refresh"></i></a>
+    </div>
+    <div class="filter-content">
+      <dl class="clearfix">
+        <dt>频道<i class="fa fa-caret-right text-muted"></i></dt>
+        <dd class="ewave-swiper ewave-swiper-nav">
+          <div class="swiper-wrapper">
+            {if empty($parent_obj.type_id)}
+            {maccms:type ids="parent" mid="8" by="sort" order="asc"}
+            <a class="swiper-slide{if $vo.type_id==$obj.type_id} active{/if}" href="{:mac_url_type($vo,['by'=>$param.by],show)}">{$vo.type_name}</a>
+            {/maccms:type}
+            {else/} <a class="swiper-slide{if $parent_obj.type_id==$obj.type_id} active{/if}" href="{:mac_url_type($parent_obj,['by'=>$param.by],show)}">{$parent_obj.type_name}</a> {maccms:type ids="child" parent="'.$parent_obj['type_id'].'" mid="8" by="sort" order="asc"} <a class="swiper-slide{if $vo.type_id==$obj.type_id} active{/if}" href="{:mac_url_type($vo,['by'=>$param.by],show)}">{$vo.type_name}</a> {/maccms:type}
+            {/if}
+          </div>
+        </dd>
+      </dl>
+      {if !empty($sexArray)}
+      <dl class="clearfix">
+        <dt>性别<i class="fa fa-caret-right text-muted"></i></dt>
+        <dd class="ewave-swiper ewave-swiper-nav">
+          <div class="swiper-wrapper"> <a class="swiper-slide{if empty($param.sex)} active{/if}" href="{:mac_url_type($obj,['sex'=>'','area'=>$param.area,'blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>$param.by],show)}">全部</a> {maccms:foreach name="sexArray"} <a class="swiper-slide{if $vo==$param.sex} active{/if}" href="{:mac_url_type($obj,['sex'=>$vo,'area'=>$param.area,'blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>$param.by],show)}">{$vo}</a> {/maccms:foreach} </div>
+        </dd>
+      </dl>
+      {/if}
+      {if !empty($areaArray)}
+      <dl class="clearfix">
+        <dt>地区<i class="fa fa-caret-right text-muted"></i></dt>
+        <dd class="ewave-swiper ewave-swiper-nav">
+          <div class="swiper-wrapper"> <a class="swiper-slide{if empty($param.area)} active{/if}" href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>'','blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>$param.by],show)}">全部</a> {maccms:foreach name="areaArray"} <a class="swiper-slide{if $vo==$param.area} active{/if}" href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>$vo,'blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>$param.by],show)}">{$vo}</a> {/maccms:foreach} </div>
+        </dd>
+      </dl>
+      {/if}
+      {if !empty($bloodArray)}
+      <dl class="clearfix">
+        <dt>血型<i class="fa fa-caret-right text-muted"></i></dt>
+        <dd class="ewave-swiper ewave-swiper-nav">
+          <div class="swiper-wrapper"> <a class="swiper-slide{if empty($param.blood)} active{/if}" href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>$param.area,'blood'=>'','starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>$param.by],show)}">全部</a> {maccms:foreach name="bloodArray"} <a class="swiper-slide{if $vo==$param.blood} active{/if}" href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>$param.area,'blood'=>$vo,'starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>$param.by],show)}">{$vo}</a> {/maccms:foreach} </div>
+        </dd>
+      </dl>
+      {/if}
+      {if !empty($starsignArray)}
+      <dl class="clearfix">
+        <dt>星座<i class="fa fa-caret-right text-muted"></i></dt>
+        <dd class="ewave-swiper ewave-swiper-nav">
+          <div class="swiper-wrapper"> <a class="swiper-slide{if empty($param.starsign)} active{/if}" href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>$param.area,'blood'=>$param.blood,'starsign'=>'','letter'=>$param.letter,'by'=>$param.by],show)}">全部</a> {maccms:foreach name="starsignArray"} <a class="swiper-slide{if $vo==$param.starsign} active{/if}" href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>$param.area,'blood'=>$param.blood,'starsign'=>$vo,'letter'=>$param.letter,'by'=>$param.by],show)}">{$vo}</a> {/maccms:foreach} </div>
+        </dd>
+      </dl>
+      {/if}
+      {if !empty($letterArray)}
+      <dl class="clearfix">
+        <dt>字母<i class="fa fa-caret-right text-muted"></i></dt>
+        <dd class="ewave-swiper ewave-swiper-nav">
+          <div class="swiper-wrapper"> <a class="swiper-slide{if empty($param.letter)} active{/if}" href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>$param.area,'blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>'','by'=>$param.by],show)}">全部</a> {maccms:foreach name="letterArray"} <a class="swiper-slide{if $vo==$param.letter} active{/if}" href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>$param.area,'blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>$vo,'by'=>$param.by],show)}">{$vo}</a> {/maccms:foreach} </div>
+        </dd>
+      </dl>
+      {/if}
+      <dl class="clearfix">
+        <dt>排序<i class="fa fa-caret-right text-muted"></i></dt>
+        <dd class="ewave-swiper ewave-swiper-nav">
+          <div class="swiper-wrapper"> <a class="swiper-slide{if empty($param.by)||$param.by=='time'} active{/if}" href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>$param.area,'blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>'time'],show)}">时间</a> <a class="swiper-slide{if $param.by=='hits'} active{/if}" href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>$param.area,'blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>'hits'],show)}">人气</a> <a class="swiper-slide{if $param.by=='up'} active{/if}" href="{:mac_url_type($obj,['sex'=>$param.sex,'area'=>$param.area,'blood'=>$param.blood,'starsign'=>$param.starsign,'letter'=>$param.letter,'by'=>'up'],show)}">点赞</a> </div>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="box gap show">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><i class="fa fa-heart"></i>&nbsp;<span>{$obj.type_name}&nbsp;<small>第{$param.page}页</small></span></h3>
+      <span class="box-head-more">共<span class="ewave-total">0</span>位明星</span>
+    </div>
+    {php}
+    if($maccms['aid']==81){
+      $myPageUrl='actor/type';
+    }elseif($maccms['aid']==82){
+      $myPageUrl='actor/show';
+    }
+    {/php}
+    <div class="vod-list actor-list">
+      <div class="row">
+        {maccms:actor num="24" paging="yes" half="3" order="desc" by="time" pageurl="'.$myPageUrl.'"}
+        <div class="col-xs-4 col-lg-3 col-xl-2">
+          {include file="block/actor_item"}
+        </div>
+        {/maccms:actor}
+      </div>
+      {include file="block/paging"}
+    </div>
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>

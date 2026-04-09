@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<title>用户注册 - {$maccms.site_name}</title>
+<meta name="keywords" content="{$maccms.site_keywords}"/>
+<meta name="description" content="{$maccms.site_description}"/>
+{include file="user/include"/}
+</head>
+<body>
+{include file="user/head"/}
+{if $GLOBALS.config.user.status==0}
+<div class="container mini-container ewave-full-height gap">
+  <div class="panel paner-default ewave-jump-msg">
+    <div class="panel-header">
+      <h3 class="text-theme text-center">系统提示...</h3>
+    </div>
+    <div class="panel-body">
+      <div class="ewave-empty"><i class="fa fa-minus-circle"></i>&nbsp;本站已关闭用户功能</div>
+      <p>&nbsp;</p>
+      <h5 class="text-center">请 <a href="{$maccms.path}"><strong class="text-theme">返回首页</strong></a></h5>
+    </div>
+  </div>
+</div>
+{elseif $GLOBALS.config.user.reg_open==0/}
+<div class="container mini-container ewave-full-height gap">
+  <div class="panel paner-default ewave-jump-msg">
+    <div class="panel-header">
+      <h3 class="text-theme text-center">系统提示...</h3>
+    </div>
+    <div class="panel-body">
+      <div class="ewave-empty"><i class="fa fa-minus-circle"></i>&nbsp;本站已关闭用户注册</div>
+      <p>&nbsp;</p>
+      <h5 class="text-center">请 <a href="{$maccms.path}"><strong class="text-theme">返回首页</strong></a></h5>
+    </div>
+  </div>
+</div>
+{else/}
+<div class="member-body gap">
+  <div class="member-bg">
+    <div class="container member-container mini-container" style="padding-top:40px;">
+      <div class="row">
+        <div class="col-sm-3"></div>
+        <h2 class="col-sm-9" style="margin-bottom:30px;font-size:24px;"><strong>用户注册</strong></h2>
+      </div>
+    </div>
+    <div class="container member-container mini-container">
+      <form class="form-horizontal center-block ewave-form" method="post" action="{:mac_url('user/reg')}" data-jump="{:mac_url('user/login')}" autocomplete="off">
+        <div class="form-group">
+          <label class="col-sm-3 control-label hidden-xs layer-hidden">用户名</label>
+          <div class="col-sm-9 layer-col-12">
+            <input type="text" class="form-control" name="user_name" placeholder="请输入您的用户名">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label hidden-xs layer-hidden">密码</label>
+          <div class="col-sm-9 layer-col-12">
+            <input type="password" class="form-control" name="user_pwd" placeholder="请输入密码">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label hidden-xs layer-hidden">确认密码</label>
+          <div class="col-sm-9 layer-col-12">
+            <input type="password" class="form-control" name="user_pwd2" placeholder="请确认您的密码">
+          </div>
+        </div>
+        {if $user_config.reg_phone_sms == 1}
+        <div class="form-group">
+          <input type="hidden" name="ac" value="phone">
+          <label class="col-sm-3 control-label hidden-xs layer-hidden">手机号码</label>
+          <div class="col-sm-9 layer-col-12">
+            <div class="input-group">
+              <input type="text" class="form-control ewave-to" name="to" placeholder="请输入您的手机号" autocomplete="off">
+              <span class="input-group-btn">
+              <input type="button" class="btn member-btn btn-theme ewave-send-code" value="获取验证码" data-action="{:mac_url('user/reg_msg')}"/>
+              </span> </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label hidden-xs layer-hidden">手机验证码</label>
+          <div class="col-sm-9 layer-col-12">
+            <input type="text" class="form-control" name="code" placeholder="请输入接收到的验证码" autocomplete="off">
+          </div>
+        </div>
+        {elseif $user_config.reg_email_sms == 1}
+        <div class="form-group">
+          <input type="hidden" name="ac" value="email">
+          <label class="col-sm-3 control-label hidden-xs layer-hidden">邮箱地址</label>
+          <div class="col-sm-9 layer-col-12">
+            <div class="input-group">
+              <input type="text" class="form-control ewave-to" name="to" placeholder="请输入您的邮箱" autocomplete="off">
+              <span class="input-group-btn">
+              <input type="button" class="btn member-btn btn-theme ewave-send-code" value="获取验证码" data-action="{:mac_url('user/reg_msg')}"/>
+              </span> </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label hidden-xs layer-hidden">邮件验证码</label>
+          <div class="col-sm-9 layer-col-12">
+            <input type="text" class="form-control" name="code" placeholder="请输入接收到的验证码" autocomplete="off">
+          </div>
+        </div>
+        {/if}
+        {if $user_config.reg_verify == 1}
+        <div class="form-group">
+          <label class="col-sm-3 control-label hidden-xs layer-hidden">图片验证码</label>
+          <div class="col-sm-9 layer-col-12">
+            <div class="row">
+              <div class="col-xs-6">
+                <input type="text" class="form-control" name="verify" placeholder="请输入右侧图片验证码" autocomplete="off">
+              </div>
+              <div class="col-xs-6"><img class="form-control p-0 ewave-verify-img" src="{:mac_url('verify/index')}" alt="验证码" title="点击刷新"/></div>
+            </div>
+          </div>
+        </div>
+        {/if}
+        <div class="form-group">
+          <div class="col-xs-12 layer-col-12">
+            <button type="submit" class="btn member-btn btn-block btn-theme bg-theme ewave-submit text-white">立即注册</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-12 layer-col-12">
+            <p class="form-control-static text-center"> <a href="{:mac_url('user/login')}" target="_top"><i class="fa fa-user"></i>&nbsp;已有账号？去登录</a> </p>
+          </div>
+        </div>
+        {if $GLOBALS['config']['connect']['qq']['status'] eq 1 || $GLOBALS['config']['connect']['weixin']['status'] eq 1}
+        <div class="row">
+          <div class="col-xs-12 layer-col-12 other-login-box">
+            <h5 class="mt-0">您也可以使用以下第三方登录</h5>
+            {if $GLOBALS['config']['connect']['qq']['status'] eq 1 && !empty($GLOBALS['config']['connect']['qq']['key']) && !empty($GLOBALS['config']['connect']['qq']['secret'])} <a class="user-login-icon qq" href="{:mac_url('user/oauth',['type'=>'qq'])}"><i class="fa fa-qq"></i></a> {/if}
+            {if $GLOBALS['config']['connect']['weixin']['status'] eq 1 && !empty($GLOBALS['config']['connect']['weixin']['key']) && !empty($GLOBALS['config']['connect']['weixin']['secret'])} <a class="user-login-icon wechat" href="{:mac_url('user/oauth',['type'=>'weixin'])}"><i class="fa fa-wechat"></i></a> {/if} </div>
+        </div>
+        {/if}
+      </form>
+    </div>
+  </div>
+</div>
+{/if}
+{include file="user/foot"/}
+</body>
+</html>

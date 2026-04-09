@@ -1,0 +1,19 @@
+{if $__PAGING__.record_total gt 0}
+<div id="pagenavi" class="clearfix mb30">
+  {if $__PAGING__.page_current gt 1}
+  <a class="page-numbers" href="{$__PAGING__.page_url|mac_url_page=$__PAGING__.page_prev}">上一页</a>
+  {/if}
+  {maccms:foreach name="$__PAGING__.page_num" id="num"}
+  {if condition="$__PAGING__.page_current == $num"}
+  <span class="page-numbers current">{$num}</span>
+  {else/}
+  <a class="page-numbers" href="{$__PAGING__.page_url|mac_url_page=$num}">{$num}</a>
+  {/if}
+  {/maccms:foreach}
+  {if $__PAGING__.page_current lt $__PAGING__.page_total}
+  <a class="page-numbers" href="{$__PAGING__.page_url|mac_url_page=$__PAGING__.page_next}">下一页</a>
+  {/if}
+</div>
+{else/}
+<div id="pagenavi" class="clearfix mb30"><span class="pages">暂无内容</span></div>
+{/if}

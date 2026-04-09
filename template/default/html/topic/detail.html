@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="detail-box art-detail-box topic-detail-box">
+  <div class="detail-box-bg blur" style="background-image:url({$obj.topic_pic|mac_url_img});"></div>
+</div>
+<div class="container">
+  <div class="layout-box topic-top-box gap"> <img class="topic-detail-cover" src="{$obj.topic_pic|mac_url_img}">
+    <h1 class="topic-detail-title text-center">{$obj.topic_name}</h1>
+    {if !empty($obj.topic_content)}
+    <p class="topic-detail-desc">{$obj.topic_content|mac_filter_html}</p>
+    {/if}
+  </div>
+  {if !empty($obj.vod_list)}
+  <div class="box gap movie">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><i class="fa fa-tv"></i>&nbsp;<span>收录视频</span></h3>
+      <span class="box-head-more">共{$obj.vod_list|count}部</span> </div>
+    <div class="vod-list">
+      <div class="row"> {maccms:foreach name="$obj.vod_list" by="time" order="desc"}
+        <div class="col-xs-4 col-lg-3 col-xl-2"> {include file="block/vod_item"} </div>
+        {/maccms:foreach}
+      </div>
+    </div>
+  </div>
+  {/if}
+  {if !empty($obj.art_list)}
+  <div class="box gap cartoon">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><i class="fa fa-file-text-o"></i>&nbsp;<span>影视资讯</span></h3>
+      <span class="box-head-more">共{$obj.art_list|count}篇</span> </div>
+    <div class="art-list">
+      {maccms:foreach name="$obj.art_list"}
+      {include file="block/art_item"}
+      {/maccms:foreach}
+    </div>
+  </div>
+  {/if}
+</div>
+{include file="block/foot"}
+<span class="mac_hits" data-id="{$obj.topic_id}" data-mid="{$maccms.mid}" data-type="insert"></span>
+</body>
+</html>

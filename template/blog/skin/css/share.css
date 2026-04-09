@@ -1,0 +1,28 @@
+﻿
+
+@media screen and (max-width: 890px){
+.share-right {float: left;margin-left: 20px;}
+}
+
+@media screen and (max-width: 600px){
+.share-right {
+float: left;
+margin-left: 0;
+}
+.bdshare a{
+    width: 90px;  
+    height: 28px;
+    font-size: 1.2rem;  
+    font-size: 12px;
+    line-height: 28px;
+
+}
+}
+
+.bdsharebuttonbox a, .bdsharebuttonbox .bds_more {
+  float: left;
+
+  background-image: url(../img/share/icons_0_16.png?v=d754dcc0.png);
+}
+
+.bdsharebuttonbox .bds_more {float:none}

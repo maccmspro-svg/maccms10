@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html class="no-js">
+<head>
+{php}$label_name='404';{/php}
+{include file="block/include"}
+<title>页面没找到 title</title>
+<meta name="description" content="页面没找到 description" />
+<meta name="keywords" content="页面没找到 keywords" />
+</head>
+<body>
+<div class="site-main spimes-container">
+  {include file="block/head"}
+  <div class="container">
+    <main id="main" class="site-main">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="error-page">
+            <h1 class="not-found-title">404</h1>
+            <a class="not-found-back" href="{$maccms.path}">返回首页</a>
+            <p>你想查看的页面已被转移或删除了，请使用上方链接返回首页。</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  {include file="block/foot"}
+</div>
+</body>
+</html>

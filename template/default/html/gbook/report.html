@@ -1,0 +1,25 @@
+<div class="mini-container">
+<form class="form-horizontal ewave-form" action="{$maccms.path}index.php/gbook/saveData" method="post" data-jump="refresh-wait">
+  <input type="hidden" name="gbook_rid" value="{$param.id}">
+  <div class="form-group ml-0 mr-0">
+    <div class="col-xs-12">
+      <textarea class="form-control ewave-gbook-content" name="gbook_content" placeholder="说说您的看法吧..." rows="3">{$param.name}</textarea>
+    </div>
+  </div>
+  <div class="row ml-0 mr-0">
+    <div class="col-xs-4 pull-right">
+      <input type="submit" class="form-control btn btn-block btn-theme" value="发表">
+    </div>
+    {if $gbook.verify eq 1}
+    <div class="col-xs-4 pull-right"> <img class="form-control p-0 ewave-verify-img ewave-verify-img-report" src="{:mac_url('verify/index')}" title="看不清楚? 换一张！"></div>
+    <div class="col-xs-4 pull-right">
+      <input class="form-control p-md-0 p-lg-0 text-center" name="verify" type="text" placeholder="验证码" autocomplete="off" data-tip="请输入验证码">
+    </div>
+    {/if}
+  </div>
+  <div class="form-group ml-0 mr-0"></div>
+</form>
+</div>
+<script>
+  eWave.Gbook.Login = {$gbook.login};
+</script> 

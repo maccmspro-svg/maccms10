@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="container">
+  {maccms:type flag="art" by="sort" order="asc" id="type" key="key_type"}
+  <div class="box gap{if $key_type % 4 == 1} movie{elseif  $key_type % 4 == 2/} tv{elseif  $key_type % 4 == 3/} show{elseif $key_type % 4 == 0/} cartoon{/if}">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><a href="{$type|mac_url_type}"><i class="fa fa-file-text-o"></i>&nbsp;<span>{$type.type_name}</span></a></h3>
+      <a class="box-head-more" href="{$type|mac_url_type}">更多&nbsp;<i class="fa fa-angle-right"></i></a>
+     </div>
+    <div class="row">
+      <div class="col-xs-12 col-lg-8 gap">
+        <div class="art-list"> 
+          {maccms:art num="5" type="'.$type['type_id'].'" by="time" order="desc"}
+          {include file="block/art_item"}
+          {/maccms:art}
+        </div>
+      </div>
+      <div class="col-xs-12 col-lg-4 hidden-xs hidden-sm hidden-md gap">
+        <div class="box ranking-box">
+          <div class="box-head">
+            <h3 class="box-head-title">&nbsp;<i class="fa fa-fire"></i>&nbsp;<span>热门{$type.type_name}</span></h3>
+          </div>
+          <ul class="ranking-list">
+            {maccms:art num="10" type="'.$type['type_id'].'" by="hits_week" order="desc"}
+            {include file="block/art_item_ranking_text"}
+            {/maccms:art}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  {/maccms:type}
+</div>
+{include file="block/foot"}
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{$eyou.field.seo_title}</title>
+<meta name="description" content="{$eyou.field.seo_description}" />
+<meta name="keywords" content="{$eyou.field.seo_keywords}" />
+<link rel="Shortcut Icon" href="{eyou:global name='web_cmspath' /}/favicon.ico" type="image/x-icon" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE;chrome=1">
+{eyou:static file="skin/js/jquery-v1.10.2.min.js" /}
+{eyou:static file="skin/css/fontello.css" /}
+<!--[if lte IE 7]>
+{eyou:static file="skin/css/fontello-ie7.min.css" /}
+<![endif]-->
+{eyou:static file="skin/css/style.css" /}
+</head>
+<body>
+<div id="wrapper">
+  {eyou:include file="header.htm" /}
+  <div id="main">
+    <div class="wrap">
+      <div class="breadcrumb"><span class="current">{$eyou.field.typename}</span></div>
+      <!-- .breadcrumbs -->
+      <div class="posts" id="listsarticle0001">
+       {eyou:arclist tagid='listsarticle0001' row='6'}
+          <div class="content">
+            <div class="content-header"> <a href="{$field.arcurl}" title="{$field.title}" target="_blank">
+              <h2>{$field.title}</h2>
+              </a>
+              <div class="content-info"> <span class="mr10 postclock"><i class="icon-clock"></i>{$field.add_time|MyDate='Y-m-d H:i:s',###}</span> <span class="mr10 postuser"><i class="icon-user"></i><a>{$field.author}</a></span> <span class="mr10 posteye"><i class=" icon-eye" ></i>{$field.click}</span>  </div>
+            </div>
+            <div class="content-img"> <a href="{$field.arcurl}" title="{$field.title}" target="_blank"> <img class="lazy thumbnail" src="{$field.litpic}" data-original="{$field.litpic}" alt="{$field.title}" /> </a> </div>
+            
+            <div class="content-note">
+              <p>{$field.seo_description|html_msubstr=###,0,90,true}</p>
+              
+              <div class="content-info-r"> <span class="mr10"><a href="{$field.arcurl}" title="{$field.title}" target="_blank">READ MORE</a><i class=" icon-export-alt" ></i></span> </div>
+            </div>
+          </div>
+         {/eyou:arclist}   
+      </div>
+      {eyou:arcpagelist tagid='listsarticle0001' pagesize ='5'}
+        <div class="post-read-more clearfix mb30">
+          <a href="javascript:void(0);" {$field.onclick}>点击加载更多</a>
+        </div>
+      {/eyou:arcpagelist}
+    </div>
+  </div>
+  {eyou:include file="left.htm" /}
+</div>
+{eyou:include file="footer.htm" /}
+
+{eyou:static file="skin/js/bootstrap.js" /}
+{eyou:static file="skin/js/traveler.js" /}
+<script type="text/javascript">
+$(function(){var win_width=$(window).width();var wrap_width=$('#wrap').width();var totop_width=$('#totop').width();var totop_posi=([win_width-wrap_width]/25-totop_width);$('#totop').css({'right':totop_posi});$(window).scroll(function(){if($(window).scrollTop()>=200){$('#totop').slideDown(200)}else{$('#totop').slideUp(200)}});$('#totop').click(function(){$('body,html').animate({scrollTop:0},200)})});
+</script> 
+{eyou:static file="skin/js/jquery.lazyload.min.js" /}
+<script type="text/javascript">
+jQuery(function() {         
+    jQuery("img").lazyload({effect : "fadeIn",failure_limit : 10 ,threshold : 50 ,}); });
+</script> 
+ 
+<script>
+window.jui = {
+  uri: '/wp-content/themes/traveler2',
+  roll: ["1","2"]}
+</script> 
+{eyou:static file="skin/js/affix.js" /}
+{eyou:static file="skin/js/responsiveslides.min.js" /}
+<script>
+    $(function() {
+      $('#suxingmeslider').responsiveSlides({
+        pager: true,
+        nav: true,
+        namespace: 'centered-btns',
+      });
+    });
+  </script> 
+{eyou:static file="skin/js/wp-embed.min.js" /}
+</body>
+</html>

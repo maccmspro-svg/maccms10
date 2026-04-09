@@ -1,0 +1,69 @@
+<div class="sidebar">
+    <div class="widget widget_suxingme_search">
+    {eyou:searchform type='default' }
+    <form class="search-form" method="get" action="{$field.action}"  name="search">
+     {$field.hidden}
+        <div class="search-input">
+          <input class="search-text" placeholder="要不找一找？" type="text" name="keywords" id="keywords" value="" onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;">
+          <input type="submit" value="　" class="search-button">
+        </div>
+      </form> 
+    {/eyou:searchform}
+    </div>
+    <div class="widget widget_suxingme_note">
+      <div class="widget-container">
+        <div class="widget_ad_title">
+          <div class="ad-t">公告栏</div>
+        </div>
+        <ul>
+        {eyou:arclist titlelen=80 typeid='7' row='4'}
+          <li><a href="{$field.arcurl}"><i class="icon-lightbulb"></i>
+            <p>{$field.title}({$field.add_time|MyDate='Y-m-d',###})</p>
+          </a></li>
+         {/eyou:arclist}
+        </ul>
+      </div>
+    </div>
+    <div class="widget widget_suxingme_ad">
+    {eyou:ad aid='5'}
+      <div class="widget_ads"><a class="ad-border" href="{$field.links}" title="{$field.title}" target="_blank"><img src="{$field.litpic}" alt="{$field.title}"></a></div>
+    {/eyou:ad}
+    </div>
+    <div class="widget widget_suxingme_hotpost">
+      <div class="w_title">
+        <h3>30天最热点击文章</h3>
+      </div>
+      {eyou:arclist type='top' titlelen='40' orderby ='click' row='3' notypeid='6,7'}
+      <li><a href="{$field.arcurl}" rel="bookmark"	title="{$field.title}">
+        <div class="overlay"></div>
+        <img src="{$field.litpic}" alt="{$field.title}" class="thumbnail" /><span><i class="icon-eye"></i>{$field.click} </span>
+        <p class="title">{$field.title}</p>
+        </a></li>
+      {/eyou:arclist}
+    </div>
+    <div class="widget widget_suxingme_mostviews">
+      <div class="w_title">
+        <h3>随便看看</h3>
+      </div>
+      {eyou:arclist titlelen='40' type='top' orderby='sort_order' row='3' notypeid='6,7'}
+      <li><a href="{$field.arcurl}" rel="bookmark"	title="{$field.title}">
+        <div class="overlay"></div>
+        <img src="{$field.litpic}" alt="{$field.title}" class="thumbnail" /><span></span>
+        <p class="title">{$field.title}</p>
+        </a></li>
+      {/eyou:arclist}
+    </div>
+    
+    <div class="widget suxingme_tag">
+      <div class="w_title">
+        <h3>热门标签</h3>
+      </div>
+      <div class="widge_tags">
+        <ul class="widget_tags_ul">
+          {eyou:tag sort='now' getall='1' row='100'}
+          <li><a href="{$field.link}" >{$field.tag} </a></li>
+          {/eyou:tag}
+        </ul>
+      </div>
+    </div>
+  </div>

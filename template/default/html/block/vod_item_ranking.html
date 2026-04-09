@@ -1,0 +1,8 @@
+<li class="ranking-item ranking-item-pic clearfix">
+              <a class="ranking-item-cover" href="{$vo|mac_url_vod_detail}" title="{$vo.vod_name}"><em class="ranking-item-num">{$key}</em><div class="img-wrapper lazyload" data-original="{$vo.vod_pic|mac_url_img}"></div></a>
+              <div class="ranking-item-info">
+                <h4 class="text-row-1"><a href="{$vo|mac_url_vod_detail}" title="{$vo.vod_name}"{if !empty($vo.vod_color)} style="color:#{$vo.vod_color};"{/if}>{$vo.vod_name}</a></h4>
+                <p class="text-row-2">演员：{$vo.vod_actor|str_replace=',','&nbsp;',###}</p>
+                <p class="text-row-1 hidden-lg hidden-xl">热度：{$vo.vod_hits}°C</p>
+              </div>
+            </li>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="container">
+  <div class="box layout-box gap shop" style="margin-bottom:12px;">
+    <ul class="breadcrumb" style="padding:0;margin:0;list-style:none;font-size:13px;color:var(--text-color-2);">
+      <li style="display:inline;"><a href="{$maccms.path}">首页</a></li>
+      <li style="display:inline;"> &gt; </li>
+      <li style="display:inline;"><a href="{:mac_url('goods/index')}">商城</a></li>
+      {if condition="!empty($obj.type.type_id)"}
+      <li style="display:inline;"> &gt; </li>
+      <li style="display:inline;"><a href="{:mac_url('goods/type',['id'=>$obj.type.type_id])}">{$obj.type.type_name}</a></li>
+      {/if}
+      <li style="display:inline;"> &gt; </li>
+      <li style="display:inline;">{$obj.goods_name}</li>
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-xl-9">
+      <div class="box gap shop goods-detail-main">
+        <div class="row">
+          <div class="col-xs-12 col-md-5">
+            <div class="layout-box" style="padding:0;overflow:hidden;">
+              <div class="img-wrapper" style="padding-bottom:100%;background-size:cover;background-position:center;background-image:url({$obj.goods_pic|mac_url_img});"></div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-7">
+            <h1 class="detail-title" style="font-size:22px;margin:0 0 8px;font-weight:700;">{$obj.goods_name}
+              {if condition="isset($obj.goods_kind) && $obj.goods_kind eq 2"}<span style="margin-left:8px;padding:2px 8px;border-radius:4px;background:#1e9fff;color:#fff;font-size:12px;vertical-align:middle;">实体</span>{else/}<span style="margin-left:8px;padding:2px 8px;border-radius:4px;background:#16b777;color:#fff;font-size:12px;vertical-align:middle;">虚拟</span>{/if}
+            </h1>
+            {if condition="!empty($obj.goods_sub)"}<p style="color:var(--text-color-2);margin:0 0 10px;">{$obj.goods_sub}</p>{/if}
+            <div class="goods-item-meta" style="margin-bottom:12px;">
+              <span class="goods-item-price" style="font-size:26px;">￥{$obj.goods_price}</span>
+              {if condition="!empty($obj.goods_points)"}<span class="goods-item-points">或 {$obj.goods_points} 积分</span>{/if}
+            </div>
+            <p style="font-size:13px;color:var(--text-color-2);">库存：{$obj.goods_stock|default='0'}　销量：{$obj.goods_sales|default='0'}</p>
+            {if $GLOBALS.config.user.status==1}
+            <p style="margin:10px 0 0;">
+              <a class="goods-fav-btn fav-btn ewave-ulog ewave-ulog-get ewave-ulog-get-{$obj.goods_id}{if condition='$goods_is_fav eq 1'} active{/if}" href="javascript:;" data-id="{$obj.goods_id}" data-mid="13" data-type="2" data-sid="0" data-nid="0">{if condition='$goods_is_fav eq 1'}<i class="fa fa-heart"></i>&nbsp;已收藏{else/}<i class="fa fa-heart-o"></i>&nbsp;收藏{/if}</a>
+              <a href="{:mac_url('user/favs')}" style="margin-left:12px;font-size:13px;color:var(--text-color-2);">我的收藏</a>
+            </p>
+            {/if}
+            {if condition="$goods_bought"}
+            <div class="layout-box" style="margin-bottom:12px;padding:10px 12px;background:rgba(22,183,119,.12);border:1px solid rgba(22,183,119,.35);border-radius:6px;font-size:13px;">
+              <i class="fa fa-check-circle" style="color:#16b777;"></i>
+              您已购买过此商品，可到
+              <a href="{:mac_url('user/goods_orders')}">会员中心 · 商品订单</a>
+              {if condition="$goods_bought_go_id gt 0"}
+              查看，或
+              <a href="{:mac_url('goods/order',['id'=>$goods_bought_go_id])}">打开最近一笔订单详情</a>
+              {/if}
+              。
+            </div>
+            {/if}
+            {if condition="$can_buy"}
+            <form class="goods-detail-buy" method="post" action="{:mac_url('goods/buy',['id'=>$obj.goods_id])}">
+              <div class="form-row">
+                <label>数量</label>
+                <input type="number" name="num" value="1" min="1" max="999"/>
+              </div>
+              {if condition="isset($obj.goods_kind) && $obj.goods_kind eq 2"}
+              <div class="form-row">
+                <label>地址</label>
+                {if condition="empty($address_list)"}
+                <span style="color:#c00;">请先 <a href="{:mac_url('user/user_address')}">添加收货地址</a></span>
+                {else/}
+                <select name="ua_id" required>
+                  <option value="">请选择收货地址</option>
+                  {volist name="address_list" id="ad"}
+                  <option value="{$ad.ua_id}">{$ad.ua_name} {$ad.ua_phone} {$ad.ua_region} {$ad.ua_address}{if condition="$ad.ua_is_default eq 1"} [默认]{/if}</option>
+                  {/volist}
+                </select>
+                {/if}
+              </div>
+              {/if}
+              {if condition="$goods_can_pay eq 1"}
+              <div class="form-row">
+                <label>支付</label>
+                <select name="payment">
+                  {volist name="goods_pay_opts" id="p"}
+                  <option value="{$p.k}">{$p.n}</option>
+                  {/volist}
+                  {if condition="!empty($obj.goods_points)"}
+                  <option value="points">积分支付</option>
+                  {/if}
+                </select>
+              </div>
+              {else/}
+              <div class="form-row"><p style="margin:0;color:#c00;font-size:13px;">暂无可用的支付方式，请在后台配置至少一种在线支付或为本商品设置积分价。</p></div>
+              {/if}
+              {if condition="$goods_can_pay neq 1"}
+              <button type="button" class="goods-buy-btn" style="opacity:.5;cursor:not-allowed;" disabled>暂无法购买</button>
+              {elseif condition="isset($obj.goods_kind) && $obj.goods_kind eq 2 && empty($address_list)" /}
+              <button type="button" class="goods-buy-btn" style="opacity:.5;cursor:not-allowed;" disabled>请先添加地址</button>
+              {else/}
+              <button type="submit" class="goods-buy-btn">立即购买</button>
+              {/if}
+            </form>
+            {else/}
+            <div class="goods-detail-buy">
+              <p style="margin:0;color:var(--theme-color);">当前会员组不可购买此商品。</p>
+              <a class="goods-buy-btn" href="{:mac_url('user/upgrade')}" style="margin-top:10px;display:inline-block;text-align:center;">去升级会员</a>
+            </div>
+            {/if}
+          </div>
+        </div>
+        {if condition="!empty($obj.goods_content)"}
+        <div class="box-head clearfix" style="margin-top:var(--theme-gap);">
+          <h3 class="box-head-title"><i class="fa fa-file-text-o"></i>&nbsp;<span>商品详情</span></h3>
+        </div>
+        <div class="detail-desc-content layout-box" style="margin-top:10px;">
+          {$obj.goods_content|mac_url_content_img}
+        </div>
+        {/if}
+      </div>
+    </div>
+    <div class="col-xs-12 col-xl-3 hidden-xs hidden-sm hidden-md hidden-lg gap">
+      <div class="box ranking-box shop">
+        <div class="box-head">
+          <h3 class="box-head-title">&nbsp;<i class="fa fa-fire"></i>&nbsp;<span>热门商品</span></h3>
+        </div>
+        <div class="vod-list goods-list">
+          {maccms:goods num="6" not="'.$obj['goods_id'].'" by="hits" order="desc"}
+          {include file="block/goods_item"}
+          {/maccms:goods}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>

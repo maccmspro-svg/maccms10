@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="container">
+  <div class="box layout-box gap shop">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><i class="fa fa-shopping-cart"></i>&nbsp;<span>商城首页</span></h3>
+      <span class="box-head-more text-overflow" style="max-width:60%;">虚拟商品 · 资源 · 授权</span>
+    </div>
+    <div class="vod-list goods-list">
+      <div class="row">
+        {maccms:goods num="24" paging="yes" pageurl="goods/index"}
+        <div class="col-xs-6 col-md-4 col-lg-3">
+          {include file="block/goods_item"}
+        </div>
+        {/maccms:goods}
+      </div>
+    </div>
+    {if condition="isset($__PAGING__) && $__PAGING__['page_total'] gt 1"}
+    <div class="mac_pages shop-goods-paging">
+      <div class="page_info">
+        <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',1,###}">首页</a>
+        <a class="page_link page_nav" href="{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_prev,###}">&#8249; 上一页</a>
+        {maccms:foreach name="$__PAGING__.page_num" id="num"}
+        {if condition="$__PAGING__['page_current'] eq $num"}
+        <a class="page_link page_current" href="javascript:;">{$num}</a>
+        {else}
+        <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',$num,###}">{$num}</a>
+        {/if}
+        {/maccms:foreach}
+        <a class="page_link page_nav" href="{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_next,###}">下一页 &#8250;</a>
+        <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_total,###}">尾页</a>
+      </div>
+    </div>
+    {/if}
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>

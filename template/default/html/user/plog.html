@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+{php}$member_page='plog';{/php}
+<title>积分记录 - 会员中心 - {$maccms.site_name}</title>
+<meta name="keywords" content="积分记录">
+<meta name="description" content="积分记录">
+{include file="user/include" /}
+</head>
+<body>
+{include file="user/head" /} 
+<div class="container member-container clearfix">
+  {include file="user/left"}
+  <div class="member-right">
+    <h2 class="member-title">我的积分记录</h2>
+    <form class="form-horizontal center-block" action="{:mac_url('user/plog_del')}">
+      <div class="member-function-box">
+        <a href="javascript:;" onClick="MAC.CheckBox.All('ids[]');">全选</a>
+        <a href="javascript:;" onClick="MAC.CheckBox.Other('ids[]');">反选</a>
+        <a class="member-delete" href="javascript:;" data-tip="确定要删除选中的积分记录吗？" data-all="0">删除</a>
+        <a class="member-clear" href="javascript:;" data-tip="确定要清空积分记录吗？" data-all="1">清空</a>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <td style="width:66px;">选择</td>
+            <td style="width:80px;">编号</td>
+            <td style="width:100px;">分类</td>
+            <td style="width:100px;">积分</td>
+            <td class="hidden-xs" style="width:140px;">时间</td>
+            <td style="width:80px;">操作</td>
+          </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+        <tr>
+          <td><input type="checkbox" name="ids[]" value="{$vo.plog_id}"/></td>
+          <td>{$vo.plog_id}</td>
+          <td>{$vo.plog_type|mac_get_plog_type_text}</td>
+          <td>{if condition="in_array($vo.plog_type,[1,2,3,4])"}+{else/}-{/if}{$vo.plog_points}</td>
+          <td class="hidden-xs">{$vo.plog_time|mac_day}</td>
+          <td><a href="javascript:;" class="member-data-delete member-delete-one" data-tip="确定要删除这条记录吗？" data-all="0" data-id="{$vo.plog_id}"><i class="fa fa-trash-o"></i><span class="hidden-xs">&nbsp;删除</span></a></td>
+        </tr>
+        {/volist}
+        </tbody>
+      </table>
+    </form>
+    {include file="user/paging"}
+  </div>
+</div>
+<script>
+  $(".member-left li.user-left-plog").addClass('active');
+</script> 
+{include file="user/foot" /}
+</body>
+</html>

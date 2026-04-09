@@ -1,0 +1,28 @@
+.idea
+/.vscode
+*.DS_Store
+/vendor
+.env
+.tags*
+.swp
+sftp-config*
+bs-config*
+.coding-ide/*
+nohup*
+*.log
+.wepycache
+.well-known
+/upload
+node_modules/
+
+# ThinkPHP / MacCMS 运行时（缓存、编译模板、临时文件等，勿入库）
+/runtime/
+
+# Windows 杂项
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# 若希望「站点配置 / 伪静态路由」也各自本地维护、不入库，可取消下面两行注释：
+# /application/extra/maccms.php
+# /application/route.php

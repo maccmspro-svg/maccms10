@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>{if condition="!empty($title)"}{$title} - {/if}{$maccms.seo.site_name|default="商城"}</title>
+</head>
+<body>
+<h1>商城首页</h1>
+
+<h2>推荐商品</h2>
+<ul>
+    {maccms:goods num="8" level="9" order="desc" by="time"}
+    <li>
+        <a href="{:mac_url('goods/detail',[],$vo)}" title="{$vo.goods_name}">
+            {$vo.goods_name}
+        </a>
+        <span>价格：<strong>{$vo.goods_price|default='0.00'}</strong></span>
+        {if condition="!empty($vo.goods_blurb)"}
+        <div>{$vo.goods_blurb}</div>
+        {/if}
+    </li>
+    {/maccms:goods}
+</ul>
+
+<h2>最新上架</h2>
+<ul>
+    {maccms:goods num="12" order="desc" by="time"}
+    <li>
+        <a href="{:mac_url('goods/detail',[],$vo)}" title="{$vo.goods_name}">
+            {$vo.goods_name}
+        </a>
+        <span>价格：<strong>{$vo.goods_price|default='0.00'}</strong></span>
+    </li>
+    {/maccms:goods}
+</ul>
+
+</body>
+</html>
+

@@ -1,0 +1,110 @@
+{php}
+  if(!empty($obj['type_extend']['class'])) {
+    $classArray=explode(',',$obj['type_extend']['class']);
+  }elseif(!empty($obj['parent']['type_extend']['class'])){
+    $classArray=explode(',',$obj['parent']['type_extend']['class']);
+  }else{
+    $classArray=explode(',',$GLOBALS['config']['app']['vod_extend_class']);
+  }
+  if(!empty($obj['type_extend']['area'])) {
+    $areaArray=explode(',',$obj['type_extend']['area']);
+  }elseif(!empty($obj['parent']['type_extend']['area'])){
+    $areaArray=explode(',',$obj['parent']['type_extend']['area']);
+  }else{
+    $areaArray=explode(',',$GLOBALS['config']['app']['vod_extend_area']);
+  }
+  if(!empty($obj['type_extend']['year'])) {
+    $yearArray=explode(',',$obj['type_extend']['year']);
+  }elseif(!empty($obj['parent']['type_extend']['year'])){
+    $yearArray=explode(',',$obj['parent']['type_extend']['year']);
+  }else{
+    $yearArray=explode(',',$GLOBALS['config']['app']['vod_extend_year']);
+  }
+  if(!empty($obj['type_extend']['lang'])) {
+    $langArray=explode(',',$obj['type_extend']['lang']);
+  }elseif(!empty($obj['parent']['type_extend']['lang'])){
+    $langArray=explode(',',$obj['parent']['type_extend']['lang']);
+  }else{
+    $langArray=explode(',',$GLOBALS['config']['app']['vod_extend_lang']);
+  }
+  if(!empty($obj['type_extend']['version'])) {
+    $versionArray=explode(',',$obj['type_extend']['version']);
+  }elseif(!empty($obj['parent']['type_extend']['version'])){
+    $versionArray=explode(',',$obj['parent']['type_extend']['version']);
+  }else{
+    $versionArray=explode(',',$GLOBALS['config']['app']['vod_extend_version']);
+  }
+  if(!empty($obj['type_extend']['state'])) {
+    $stateArray=explode(',',$obj['type_extend']['state']);
+  }elseif(!empty($obj['parent']['type_extend']['state'])){
+    $stateArray=explode(',',$obj['parent']['type_extend']['state']);
+  }else{
+    $stateArray=explode(',',$GLOBALS['config']['app']['vod_extend_state']);
+  }
+  $letterArray=explode(',','A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z');
+  if(!empty($obj['childids'])){
+    $parent_obj=$obj;
+  }elseif(!empty($obj['parent'])){
+    $parent_obj=$obj['parent'];
+  }
+{/php}
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="container">
+  <div class="box gap cartoon">
+    <div class="row">
+      <div class="col-xs-12 col-lg-8">
+        <div class="box-head art-box-head clearfix">
+          <h3 class="box-head-title"><a href="{$obj|mac_url_type}"><i class="fa fa-file-text-o"></i>&nbsp;<span>{$obj.type_name}&nbsp;<small>第{$param.page}页</small></span></a></h3>
+          <div class="art-tab">
+            <div class="ewave-swiper ewave-swiper-nav">
+              <ul class="tab-box swiper-wrapper">
+                {if !empty($parent_obj.type_id)}
+                <li class="swiper-slide tab-item{if $parent_obj.type_id==$obj.type_id} active{/if}"><a href="{$parent_obj|mac_url_type}">{$parent_obj.type_name}</a></li>
+                {maccms:type ids="child" parent="'.$parent_obj['type_id'].'" by="sort" order="asc"}
+                <li class="swiper-slide tab-item{if $vo.type_id==$obj.type_id} active{/if}"><a href="{$vo|mac_url_type}">{$vo.type_name}</a></li>
+                {/maccms:type}
+                {else/}
+                {maccms:type ids="parent" flag="art" by="sort" order="asc"}
+                <li class="swiper-slide tab-item{if $vo.type_id==$obj.type_id} active{/if}"><a href="{$vo|mac_url_type}">{$vo.type_name}</a></li>
+                {/maccms:type}
+                {/if}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-lg-8">
+        <div class="art-list"> 
+          {maccms:art num="10" paging="yes" half="3" by="time" order="desc" pageurl="art/type"}
+          {include file="block/art_item"}
+          {/maccms:art}
+        </div>
+        {include file="block/paging"}
+      </div>
+      <div class="col-xs-12 col-lg-4 hidden-xs hidden-sm hidden-md gap ewave-sticky">
+        <div class="box ranking-box">
+          <div class="box-head">
+            <h3 class="box-head-title">&nbsp;<i class="fa fa-fire"></i>&nbsp;<span>热门{$obj.type_name}</span></h3>
+          </div>
+          <ul class="ranking-list">
+            {maccms:art num="10" type="current" by="hits_week" order="desc"}
+            {include file="block/art_item_ranking_text"}
+            {/maccms:art}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>

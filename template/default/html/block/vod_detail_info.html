@@ -1,0 +1,52 @@
+<div class="detail-box gap">
+  <div class="detail-box-bg blur" style="background-image:url({$obj.vod_pic|mac_url_img});"></div>
+  <div class="container detail-container">
+    <div class="row">
+      <div class="col-xs-4 col-md-3 col-xl-2">
+        <div class="detail-img"> <img class="lazyload" src="{$maccms.path_tpl}images/loading.gif" data-original="{$obj.vod_pic|mac_url_img}" alt="{$obj.vod_name}"> </div>
+      </div>
+      <div class="col-xs-8 col-md-9 col-xl-10">
+        <div class="detail-info">
+          <h1 class="detail-info-title text-row-2"{if !empty($obj.vod_color)} style="color:#{$obj.vod_color};"{/if}>{$obj.vod_name}</h1>
+          {include file="block/star"}
+          <ul class="detail-info-desc row">
+            {php}$spliter=array(' / ', '/', '|', ',', '，', ',,');{/php}
+            <li class="col-xs-12 text-row-2"><i class="fa fa-user-o fa-fw"></i><span>主演：</span>{if !empty($obj.vod_actor)}{maccms:foreach name=":explode(',',trim(str_replace($spliter, ',', $obj.vod_actor),','))" id="actor"}{if condition="$key gt 0"} / {/if}<a href="{:mac_url('vod/search',['actor'=>$actor])}" target="_blank">{$actor}</a>{/maccms:foreach}{else/}未知{/if} </li>
+            <li class="col-xs-12 col-md-6 col-lg-4 col-xl-3 hidden-xs hidden-sm hidden-md"><i class="fa fa-bars fa-fw"></i><span>类型：</span>{if !empty($obj.vod_class)}{maccms:foreach name=":explode(',',$obj.vod_class)"}<a href="{:mac_url_type($obj,['class'=>$vo],'show')}">{$vo}</a>{/maccms:foreach}{else/}未录入{/if}</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 col-xl-3 hidden-xs"><i class="fa fa-user-o fa-fw"></i><span>导演：</span>{$obj.vod_director|mac_url_create='director','vod','search','&nbsp;'}</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 col-xl-3 hidden-xs hidden-sm"><i class="fa fa-dedent fa-fw"></i><span>状态：</span>{if ($obj.type.type_id == 1) || ($obj.type_id_1 == 1)}{$obj.vod_remarks|default='高清'}{elseif !empty($obj.vod_remarks)/}{$obj.vod_remarks}{elseif !empty($obj.vod_serial)/}更新至第{$obj.vod_serial}集{else/}全集{/if}</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 col-xl-3 hidden-xs hidden-sm hidden-md"><i class="fa fa-fire fa-fw"></i><span>热度：</span><em class="mac_hits hits" data-mid="{$maccms.mid}" data-id="{$obj.vod_id}" data-type="hits">{$obj.vod_hits}</em> ℃</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 col-xl-3 hidden-xs"><i class="fa fa-calendar fa-fw"></i><span>年份：</span>{if !empty($obj.vod_year)}{maccms:foreach name=":explode(',',$obj.vod_year)"}<a href="{:mac_url_type($obj,['year'=>$vo],'show')}">{$vo}</a>{/maccms:foreach}{else/}未录入{/if}</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 col-xl-3 hidden-xs hidden-sm"><i class="fa fa-map-marker fa-fw"></i><span>地区：</span>{if !empty($obj.vod_area)}{maccms:foreach name=":explode(',',$obj.vod_area)"}<a href="{:mac_url_type($obj,['area'=>$vo],'show')}">{$vo}</a>{/maccms:foreach}{else/}未录入{/if}</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 col-xl-3 hidden-xs hidden-sm hidden-md"><i class="fa fa-compass fa-fw"></i><span>语言：</span>{if !empty($obj.vod_lang)}{maccms:foreach name=":explode(',',$obj.vod_lang)"}<a href="{:mac_url_type($obj,['lang'=>$vo],'show')}">{$vo}</a>{/maccms:foreach}{else/}未录入{/if}</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 col-xl-3 hidden-xs hidden-sm hidden-md"><i class="fa fa-clock-o fa-fw"></i><span>更新：</span>{$obj.vod_time|date='Y-m-d',###}</li>
+            <li class="col-xs-12 text-row-2 hidden-xs hidden-sm hidden-md"><i class="fa fa-file-text-o fa-fw"></i><span>简介：</span>{$obj.vod_blurb}</li>
+          </ul>
+          <div class="detail-info-btn">
+            {if $maccms.mid==10}
+            <a href="{$obj|mac_url_vod_detail}"><i class="fa fa-file-text-o"></i>&nbsp;查看详情</a>
+            {else/}
+            {if !empty($obj.vod_play_list) && $maccms.aid!=15 && (empty($obj.vod_copyright) || ($GLOBALS.config.app.copyright_status == 0)||($GLOBALS.config.app.copyright_status gt 2))}
+            {php}$playlist_index=1;{/php}
+            {maccms:foreach name="obj.vod_play_list" id="vo"}
+            {if $playlist_index==1} <a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>1])}"><i class="fa fa-play-circle-o"></i>&nbsp;立即播放</a> {/if}
+            {php}$playlist_index++;{/php}
+            {/maccms:foreach}
+            {/if}
+            {/if}
+            {if $GLOBALS.config.user.status==1} <a class="fav-btn ewave-ulog ewave-ulog-get ewave-ulog-get-{$obj.vod_id}" href="javascript:;" data-id="{$obj.vod_id}" data-mid="1" data-type="2"><i class="fa fa-heart-o"></i>&nbsp;收藏</a>{/if} </div>
+        </div>
+      </div>
+      {if !empty(mac_filter_html($obj.vod_content))}
+      <div class="col-xs-12 hidden-lg hidden-xl hidden-xxl">
+        <div class="detail-intro ewave-collapse">
+          <div class="ewave-collapse-toggle">
+            <p class="detail-intro-text text-row ewave-collapse-content">{$obj.vod_content|mac_filter_html}</p>
+            <div class="detail-intro-more text-center"><i class="fa fa-angle-down"></i></div>
+          </div>
+        </div>
+      </div>
+      {/if}
+    </div>
+  </div>
+</div>

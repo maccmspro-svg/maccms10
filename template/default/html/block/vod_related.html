@@ -1,0 +1,56 @@
+<div class="box layout-box gap tv">
+        <div class="box-head clearfix">
+          <h3 class="box-head-title"><i class="fa fa-tv"></i>&nbsp;<span>为您推荐</span></h3>
+        </div>
+        <div class="vod-list vod-list-related ewave-swiper ewave-swiper-image">
+          <div class="swiper-wrapper">
+            {php}
+            $related_num=12;
+            $rel_num=0;
+            $my_key=1;
+            $related_id=$obj['vod_id'];
+            if (!empty($obj['vod_rel_vod'])){
+            $rel_num=count(explode(',',trim($obj['vod_rel_vod'],',')));
+            if ($rel_num > $related_num) {
+            $rel_num=$related_num;
+            }
+            $related_num-=$rel_num;
+            }
+            {/php}
+            {if !empty($rel_num)}
+            {maccms:vod num="'.$rel_num.'" rel="'.$obj['vod_rel_vod'].'"}
+            {if $vo.vod_id != $obj.vod_id}
+            <div class="swiper-slide col-xs-4 col-lg-3"> {include file="block/vod_item_slide"} </div>
+            {php}$related_id.=",".$vo['vod_id'];$my_key++;{/php}
+            {else/}
+            {php}$rel_num--;$related_num++;{/php}
+            {/if}
+            {/maccms:vod}
+            {/if}
+            {if !empty($related_num)}
+            {maccms:vod num="'.$related_num.'" not="'.$related_id.'" type="current" by="hits_week" order="desc"}
+            <div class="swiper-slide col-xs-4 col-lg-3"> {include file="block/vod_item_slide"} </div>
+            {php}$related_id.=",".$vo['vod_id'];$rel_num++;$related_num--;$my_key++;{/php}
+            {/maccms:vod}
+            {/if}
+            {if !empty($related_num)}
+            {maccms:vod num="'.$related_num.'" not="'.$related_id.'" by="hits_week" order="desc"}
+            <div class="swiper-slide col-xs-4 col-lg-3"> {include file="block/vod_item_slide"} </div>
+            {php}$related_id.=",".$vo['vod_id'];$rel_num++;$related_num--;$my_key++;{/php}
+            {/maccms:vod}
+            {/if}
+          </div>
+        </div>
+      </div>
+      {if !empty($obj.vod_rel_art) && $maccms.aid!=15}
+      <div class="box gap cartoon">
+        <div class="box-head clearfix">
+          <h3 class="box-head-title"><i class="fa fa-file-text-o"></i>&nbsp;<span>相关资讯</span></h3>
+        </div>
+        <div class="art-list">
+          {maccms:art num="10" ids="'.$obj['vod_rel_art'].'" by="time" order="asc"}
+          {include file="block/art_item"}
+          {/maccms:art}
+        </div>
+      </div>
+      {/if}

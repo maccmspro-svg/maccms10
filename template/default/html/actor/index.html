@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="container">
+  <div class="slide slide-type layout-box gap ewave-swiper ewave-swiper-image">
+    <ul class="swiper-wrapper">
+      {maccms:actor num="10" by="hits_week" order="desc"}
+        <li class="swiper-slide">
+          <div class="slide-small">
+            <div class="vod-item vod-item-slide"> <a class="vod-item-img shining" href="{$vo|mac_url_actor_detail}">
+          <div class="img-wrapper swiper-lazy" data-background="{$vo.actor_pic|mac_url_img}"></div>
+          </a>
+          <div class="vod-item-info">
+            <h3 class="vod-item-title text-row-1 text-row-xs-2"><a href="{$vo|mac_url_actor_detail}"{if !empty($vo.actor_color)} style="color:#{$vo.actor_color};"{/if}>{$vo.actor_name}</a></h3>
+          </div>
+        </div>
+          </div>
+        </li>
+        {/maccms:actor}
+    </ul>
+  </div>
+  {maccms:type mid="8" by="sort" order="asc" id="type" key="key_type"}
+  <div class="box gap{if $key_type % 4 == 1} movie{elseif  $key_type % 4 == 2/} tv{elseif  $key_type % 4 == 3/} show{elseif $key_type % 4 == 0/} cartoon{/if}">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><a href="{$type|mac_url_type}"><i class="fa fa-heart-o"></i>&nbsp;<span>{$type.type_name}</span></a></h3>
+      <a class="box-head-more" href="{$type|mac_url_type}">更多&nbsp;<i class="fa fa-angle-right"></i></a>
+    </div>
+    <div class="vod-list actor-list">
+      <div class="row">
+        {maccms:actor num="12" type="'.$type['type_id'].'" by="time" order="desc"}
+        <div class="col-xs-4 col-lg-3 col-xl-2{if $key gt 6} hidden-xs hidden-sm hidden-md{/if}{if $key gt 8} hidden-lg{/if}">
+          {include file="block/actor_item"}
+        </div>
+        {/maccms:actor}
+      </div>
+    </div>
+  </div>
+  {/maccms:type}
+</div>
+{include file="block/foot"}
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>使用浏览器打开</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta name="format-detection" content="telephone=no">
+    <meta content="false" name="twcClient" id="twcClient">
+    <meta name="aplus-touch" content="1">
+    <style>
+        body,html{width:100%;height:100%}
+        *{margin:0;padding:0}
+        body{background-color:#fff}
+        #browser img{
+            width:50px;
+        }
+        #browser{
+            margin: 0px 10px;
+            text-align:center;
+        }
+        #contens{
+            font-weight: bold;
+            margin:-285px 0px 10px;
+            text-align:center;
+            font-size:20px;
+            margin-bottom: 125px;
+        }
+        .top-bar-guidance{font-size:15px;color:#fff;height:60%;line-height:1.8;padding-left:20px;padding-top:20px;background:linear-gradient(180deg,#2b6cff 0%,#1a4dcc 100%) center top/cover no-repeat}
+        .top-bar-guidance .icon-safari{display:inline-block;width:25px;height:25px;vertical-align:middle;margin:0 .2em;border-radius:6px;background:rgba(255,255,255,.25);line-height:25px;text-align:center;font-size:14px}
+        .app-download-tip{margin:0 auto;width:290px;text-align:center;font-size:15px;color:#2466f4;background:repeating-linear-gradient(90deg,#2466f4 0,#2466f4 3px,transparent 3px,transparent 6px) left center/100% 2px repeat-x}
+        .app-download-tip .guidance-desc{background-color:#fff;padding:0 5px}
+        .app-download-btn{display:block;width:214px;height:40px;line-height:40px;margin:18px auto 0 auto;text-align:center;font-size:18px;color:#2466f4;border-radius:20px;border:.5px #2466f4 solid;text-decoration:none}
+    </style>
+</head>
+<body>
+<div class="top-bar-guidance">
+    <p>点击右上角<span class="icon-safari" aria-hidden="true">⋯</span> <span id="openm">在浏览器中打开</span></p>
+    <p>可以继续浏览本站哦~</p>
+</div>
+<div id="browser">
+    <p>避免微信和QQ屏蔽本站网址，请理解支持！</p>
+</div>
+<div class="app-download-tip">
+    <span class="guidance-desc">点击右上角或复制网址自行打开</span>
+</div>
+<link href="{$maccms.path}static/layui/css/modules/layer/default/layer.css" rel="stylesheet" type="text/css" />
+<script src="{$maccms.path}static/js/jquery.js"></script>
+<script src="{$maccms.path}static/js/jquery.clipboard.js"></script>
+<script src="{$maccms.path}static/layui/lay/modules/layer.js"></script>
+<a data-clipboard-text="{$maccms.http_url}" class="app-download-btn">点此复制本站网址</a>
+<script type="text/javascript">
+    new ClipboardJS(".app-download-btn");
+    $(".app-download-btn").click(function() {
+        layer.tips("复制成功，么么哒", ".app-download-btn", {
+            tips: [3, "rgb(38,111,250)"],
+            time:500
+        });})
+</script>
+
+</body>
+</html>

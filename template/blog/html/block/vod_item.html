@@ -1,0 +1,20 @@
+<div class="content">
+  <div class="content-header">
+    <a href="{$vo|mac_url_vod_detail}" title="{$vo.vod_name}"><h2>{$vo.vod_name}</h2></a>
+    <div class="content-info">
+      <span class="mr10 postclock"><i class="icon-clock"></i>{$vo.vod_time|date='Y-m-d H:i:s',###}</span>
+      <span class="mr10 posteye"><i class="icon-eye"></i>{$vo.vod_hits}</span>
+    </div>
+  </div>
+  <div class="content-img">
+    <a href="{$vo|mac_url_vod_detail}" title="{$vo.vod_name}">
+      <img class="lazy thumbnail" src="{if !empty($vo.vod_pic_slide)}{$vo.vod_pic_slide|mac_url_img}{else/}{$vo.vod_pic|mac_url_img}{/if}" alt="{$vo.vod_name}">
+    </a>
+  </div>
+  <div class="content-note">
+    <p>{$vo.vod_blurb|mac_filter_html|mac_substring=###,120}</p>
+    <div class="content-info-r">
+      <span class="mr10"><a href="{$vo|mac_url_vod_detail}" title="{$vo.vod_name}">READ MORE</a><i class="icon-export-alt"></i></span>
+    </div>
+  </div>
+</div>

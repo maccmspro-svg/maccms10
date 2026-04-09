@@ -1,0 +1,26 @@
+<div id="sitetopbar">
+  <div class="site-logo">
+    <h1><a href="{$maccms.path}"><img src="{$maccms.site_logo|mac_url_img}" alt="{$maccms.site_name}"></a></h1>
+  </div>
+  <div class="site-logo-m">
+    <h1><a href="{$maccms.path}"><img src="{$maccms.site_logo|mac_url_img}" alt="{$maccms.site_name}"></a></h1>
+  </div>
+  <div role="navigation" class="site-nav left-menu">
+    <h1 class="minimenu-text"><i class="icon-align-justify"></i></h1>
+    <ul id="menu-navigation" class="menu">
+      <li{if $maccms.aid==1} class="current-menu-item"{/if}><a href="{$maccms.path}">首页</a></li>
+      {maccms:type ids="parent" mid="2" by="sort" order="asc" id="type"}
+      <li{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} class="current-menu-item"{/if}>
+        <a href="{$type|mac_url_type}">{$type.type_name}{if !empty($type.childids)}<span class="sign"></span>{/if}</a>
+        {if !empty($type.childids)}
+        <ul class="sub-menu">
+          {maccms:type ids="child" parent="'.$type['type_id'].'" by="sort" order="asc"}
+          <li><a href="{$vo|mac_url_type}">{$vo.type_name}</a></li>
+          {/maccms:type}
+        </ul>
+        {/if}
+      </li>
+      {/maccms:type}
+    </ul>
+  </div>
+</div>

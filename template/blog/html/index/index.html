@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+<div id="wrapper">
+  {include file="block/header"}
+  <div id="main">
+    <div class="wrap">
+      <div class="container mb30">
+        <div class="slider">
+          <ul id="suxingmeslider">
+            {maccms:art num="5" level="9" by="time" order="desc"}
+            <li><a class="item" href="{$vo|mac_url_art_detail}" title="{$vo.art_name}"><img src="{$vo.art_pic|mac_url_img}" alt="{$vo.art_name}" class="thumbnail"></a></li>
+            {/maccms:art}
+          </ul>
+        </div>
+      </div>
+
+      <div class="index-post mb30">
+        <div class="article-title"><h3>最新文章</h3></div>
+        <div class="posts" id="index001">
+          {maccms:art num="8" paging="yes" by="time" order="desc" pageurl="art/index"}
+          {include file="block/art_item"}
+          {/maccms:art}
+        </div>
+        {include file="block/paging"}
+      </div>
+    </div>
+  </div>
+  {include file="block/left"}
+</div>
+{include file="block/footer"}
+</body>
+</html>

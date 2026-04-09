@@ -1,0 +1,5 @@
+<li class="ranking-item">
+              <em class="ranking-item-num">{$key}</em>
+              <a class="ranking-item-title text-row-1" href="{$vo|mac_url_vod_detail}" title="{$vo.vod_name}">{$vo.vod_name}</a>
+              {if $maccms.aid==7}<span class="ranking-item-time hidden-xs hidden-sm hidden-md">{if $label_name=='new'}<i class="fa fa-clock-o"></i>&nbsp;{$vo.vod_time|date="Y-m-d",###}{elseif $label_name=='ranking'}<i class="fa fa-fire"></i>&nbsp;{$vo.vod_hits}{/if}</span>{/if}
+            </li>

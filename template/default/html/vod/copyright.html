@@ -1,0 +1,31 @@
+{if $GLOBALS['config']['app']['copyright_status'] eq 2}
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<title>系统提示......</title>
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="container mini-container">
+  <div class="panel paner-default ewave-jump-msg">
+    <div class="panel-header">
+      <h3 class="text-theme text-center">系统提示...</h3>
+    </div>
+    <div class="panel-body">
+      <h4 class="text-center">亲爱的用户：</h4>
+      <p class="text-center">《{$obj['vod_name']}》{$GLOBALS['config']['app']['copyright_notice']|default='因版权问题，本站不提供播放'}</p>
+      {if !empty($obj.vod_jumpurl)}
+      <h5 class="text-center mt-10">请 <a href="{$obj.vod_jumpurl}"><strong class="text-theme">点击跳转</strong></a></h5>
+      {/if}
+    </div>
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>
+{elseif $GLOBALS['config']['app']['copyright_status'] eq 3/}
+{include file="vod/play"}
+{elseif $GLOBALS['config']['app']['copyright_status'] eq 4/}
+{include file="vod/player"}
+{/if}

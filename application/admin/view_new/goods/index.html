@@ -1,0 +1,173 @@
+{include file="../../../application/admin/view_new/public/head" /}
+<div class="page-container p-4">
+    <div class="my-toolbar-box">
+        <div class="mb-4">
+            <form class="layui-form flex flex-wrap gap-2 items-center" method="post" action="{:url('data')}">
+                <input type="hidden" value="{$param.select|mac_filter_xss}" name="select">
+                <input type="hidden" value="{$param.input|mac_filter_xss}" name="input">
+
+                <div class="layui-input-inline w150">
+                    <select name="type">
+                        <option value="">{:lang('select_type')}</option>
+                        {volist name="type_tree" id="vo"}
+                        <option value="{$vo.type_id}" {if condition="$param['type'] eq $vo.type_id"}selected {/if}>{$vo.type_name}</option>
+                        {volist name="vo.child" id="ch"}
+                        <option value="{$ch.type_id}" {if condition="$param['type'] eq $ch.type_id"}selected {/if}>&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;{$ch.type_name}</option>
+                        {/volist}
+                        {/volist}
+                    </select>
+                </div>
+                <div class="layui-input-inline w150">
+                    <select name="status">
+                        <option value="">{:lang('select_status')}</option>
+                        <option value="0" {if condition="$param['status'] eq '0'"}selected {/if}>{:lang('reviewed_not')}</option>
+                        <option value="1" {if condition="$param['status'] eq '1'"}selected {/if}>{:lang('reviewed')}</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline w150">
+                    <select name="level">
+                        <option value="">{:lang('select_level')}</option>
+                        <option value="1" {if condition="$param['level'] eq '1'"}selected {/if}>{:lang('level')}1</option>
+                        <option value="2" {if condition="$param['level'] eq '2'"}selected {/if}>{:lang('level')}2</option>
+                        <option value="3" {if condition="$param['level'] eq '3'"}selected {/if}>{:lang('level')}3</option>
+                        <option value="4" {if condition="$param['level'] eq '4'"}selected {/if}>{:lang('level')}4</option>
+                        <option value="5" {if condition="$param['level'] eq '5'"}selected {/if}>{:lang('level')}5</option>
+                        <option value="6" {if condition="$param['level'] eq '6'"}selected {/if}>{:lang('level')}6</option>
+                        <option value="7" {if condition="$param['level'] eq '7'"}selected {/if}>{:lang('level')}7</option>
+                        <option value="8" {if condition="$param['level'] eq '8'"}selected {/if}>{:lang('level')}8</option>
+                        <option value="9" {if condition="$param['level'] eq '9'"}selected {/if}>{:lang('level')}9</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline w150">
+                    <input type="text" autocomplete="off" placeholder="最低价格" class="layui-input" name="price_min" value="{$param['price_min']|default=''}">
+                </div>
+                <div class="layui-input-inline w150">
+                    <input type="text" autocomplete="off" placeholder="最高价格" class="layui-input" name="price_max" value="{$param['price_max']|default=''}">
+                </div>
+                <div class="layui-input-inline w150">
+                    <select name="order">
+                        <option value="">{:lang('select_sort')}</option>
+                        <option value="goods_time" {if condition="$param['order'] eq 'goods_time'"}selected{/if}>{:lang('update_time')}</option>
+                        <option value="goods_id" {if condition="$param['order'] eq 'goods_id'"}selected{/if}>{:lang('id')}</option>
+                        <option value="goods_hits" {if condition="$param['order'] eq 'goods_hits'"}selected{/if}>{:lang('hits')}</option>
+                        <option value="goods_sales" {if condition="$param['order'] eq 'goods_sales'"}selected{/if}>销量</option>
+                        <option value="goods_price" {if condition="$param['order'] eq 'goods_price'"}selected{/if}>价格</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" autocomplete="off" placeholder="{:lang('wd')}" class="layui-input" name="wd" value="{$param['wd']|mac_restore_htmlfilter}">
+                </div>
+                <button class="layui-btn j-search">{:lang('btn_search')}</button>
+            </form>
+        </div>
+
+        <div class="layui-btn-group mb-2">
+            <a data-href="{:url('info')}" data-full="1" class="layui-btn layui-btn-primary j-iframe">
+                <i class="layui-icon">&#xe654;</i>{:lang('add')}
+            </a>
+            <a data-href="{:url('del')}" class="layui-btn layui-btn-primary j-page-btns confirm">
+                <i class="layui-icon">&#xe640;</i>{:lang('del')}
+            </a>
+            <a data-href="{:url('index/select')}?tab=goods&col=type_id&tpl=select_type&url=goods/field" data-width="270" data-height="100" data-checkbox="1" class="layui-btn layui-btn-primary j-select">
+                <i class="layui-icon">&#xe620;</i>{:lang('type')}
+            </a>
+            <a data-href="{:url('index/select')}?tab=goods&col=goods_level&tpl=select_level&url=goods/field" data-width="270" data-height="100" data-checkbox="1" class="layui-btn layui-btn-primary j-select">
+                <i class="layui-icon">&#xe620;</i>{:lang('level')}
+            </a>
+            <a data-href="{:url('index/select')}?tab=goods&col=goods_status&tpl=select_status&url=goods/field" data-width="270" data-height="100" data-checkbox="1" class="layui-btn layui-btn-primary j-select">
+                <i class="layui-icon">&#xe620;</i>{:lang('status')}
+            </a>
+            {if condition="$param.select eq 1"}
+            <a data-href="" onclick="parent.onSelectResult('{$param.input|mac_filter_xss}', $('.checkbox-ids:checked'))" class="layui-btn layui-btn-normal">
+                {:lang('select_return')}
+            </a>
+            {/if}
+        </div>
+    </div>
+
+    <form class="layui-form" method="post" id="pageListForm">
+        <table class="layui-table" lay-size="sm">
+            <thead>
+            <tr>
+                <th width="25"><input type="checkbox" lay-skin="primary" lay-filter="allChoose"></th>
+                <th width="60">{:lang('id')}</th>
+                <th>{:lang('name')}</th>
+                <th width="80">价格</th>
+                <th width="80">库存</th>
+                <th width="80">销量</th>
+                <th width="60">{:lang('level')}</th>
+                <th width="80">{:lang('status')}</th>
+                <th width="140">{:lang('update_time')}</th>
+                <th width="160">{:lang('opt')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="list" id="vo"}
+            <tr>
+                <td><input type="checkbox" name="ids[]" value="{$vo.goods_id}" class="layui-checkbox checkbox-ids" lay-skin="primary"></td>
+                <td>{$vo.goods_id}</td>
+                <td>
+                    {if condition="isset($vo['type'])"}
+                    [{$vo.type.type_name}]
+                    {/if}
+                    <a href="{:mac_url('goods/detail',['id'=>$vo['goods_id']])}" target="_blank">
+                        {$vo.goods_name|mac_filter_xss|mac_restore_htmlfilter}
+                    </a>
+                    {if condition="$vo.goods_status eq 0"} <span class="layui-badge">{:lang('reviewed_not')}</span>{/if}
+                </td>
+                <td>{$vo.goods_price}</td>
+                <td>{$vo.goods_stock}</td>
+                <td>{$vo.goods_sales}</td>
+                <td>
+                    <a data-href="{:url('index/select')}?tab=goods&col=goods_level&tpl=select_level&url=goods/field&ids={$vo.goods_id}" data-width="270" data-height="100" class="j-select">
+                        <span class="layui-badge layui-bg-orange">{$vo.goods_level|default='0'}</span>
+                    </a>
+                </td>
+                <td>
+                    {if condition="$vo.goods_status eq 1"}
+                    <span class="layui-badge layui-bg-green">{:lang('reviewed')}</span>
+                    {else/}
+                    <span class="layui-badge">{:lang('reviewed_not')}</span>
+                    {/if}
+                </td>
+                <td>{$vo.goods_time|mac_day='color'}</td>
+                <td>
+                    <a class="layui-badge-rim j-iframe" data-full="1" data-href="{:url('info?id='.$vo['goods_id'])}" href="javascript:;" title="{:lang('edit')}">{:lang('edit')}</a>
+                    <a class="layui-badge-rim j-tr-del" data-href="{:url('del?ids='.$vo['goods_id'])}" href="javascript:;" title="{:lang('del')}">{:lang('del')}</a>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+        <div id="pages" class="center"></div>
+    </form>
+</div>
+
+{include file="../../../application/admin/view_new/public/foot" /}
+
+<script type="text/javascript">
+    var curUrl = "{:url('goods/data',$param)}";
+    layui.use(['laypage', 'layer','form'], function() {
+        var laypage = layui.laypage
+            , layer = layui.layer,
+            form = layui.form;
+        $ = layui.jquery;
+
+        laypage.render({
+            elem: 'pages'
+            ,count: {$total}
+            ,limit: {$limit}
+            ,curr: {$page}
+            ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+            ,jump: function(obj,first){
+                if(!first){
+                    location.href = curUrl.replace('%7Bpage%7D',obj.curr).replace('%7Blimit%7D',obj.limit);
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
+

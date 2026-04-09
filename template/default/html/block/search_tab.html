@@ -1,0 +1,5 @@
+<ul class="tab-box search-tab clearfix">
+            <li class="tab-item{if $maccms.aid==13} active{/if}"><a href="{if $maccms.aid==13} javascript:;{else/}{:mac_url('vod/search',['wd'=>$param.wd,'actor'=>$param.actor,'director'=>$param.director,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'class'=>$param.class,'tag'=>$param.tag])}{/if}"><i class="fa fa-play-circle-o"></i>&nbsp;视频</a></li>
+            <li class="tab-item{if $maccms.aid==23} active{/if}"><a href="{if $maccms.aid==23}javascript:;{else/}{:mac_url('art/search',['wd'=>$param['wd'].$param['actor'].$param['director'].$param['area'].$param['lang'].$param['year'],'class'=>$param.class,'tag'=>$param.tag])}{/if}"><i class="fa fa-file-text-o"></i>&nbsp;文章</a></li>
+            <li class="tab-item{if $maccms.aid==83} active{/if}"><a href="{if $maccms.aid==83}javascript:;{else/}{:mac_url('actor/search',['wd'=>$param['wd'].$param['actor'].$param['director'].$param['lang'].$param['year'],'area'=>$param.area,'class'=>$param.class,'tag'=>$param.tag])}{/if}"><i class="fa fa-user-o"></i>&nbsp;明星</a></li>
+          </ul>

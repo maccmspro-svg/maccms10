@@ -1,0 +1,1 @@
+{if ($vo.type.type_id == 1) || ($vo.type_id_1 == 1)}{$vo.vod_remarks|default='高清'}{elseif !empty($vo.vod_remarks)/}{$vo.vod_remarks}{elseif !empty($vo.vod_serial)/}更新至第{$vo.vod_serial}集{else/}全集{/if}

@@ -1,0 +1,40 @@
+{include file="../../../application/admin/view/public/head" /}
+<div class="page-container p10">
+    <form class="layui-form layui-form-pane" method="post" action="">
+        <input type="hidden" name="go_id" value="{$info.go_id}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">订单号</label>
+            <div class="layui-input-block">
+                <div class="layui-form-mid">{$info.go_code}</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">收货人</label>
+            <div class="layui-input-block">
+                <div class="layui-form-mid">{$info.go_receiver_name|default='-'} {$info.go_receiver_phone|default=''}</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">地址</label>
+            <div class="layui-input-block">
+                <div class="layui-form-mid">{$info.go_receiver_region|default=''} {$info.go_receiver_address|default=''}</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">快递公司</label>
+            <div class="layui-input-block">
+                <input type="text" name="go_express_name" required lay-verify="required" placeholder="如：顺丰" class="layui-input" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">运单号</label>
+            <div class="layui-input-block">
+                <input type="text" name="go_express_no" required lay-verify="required" placeholder="物流单号" class="layui-input" value="">
+            </div>
+        </div>
+        <div class="layui-form-item center">
+            <button type="submit" class="layui-btn" lay-submit lay-filter="formSubmit">确认发货</button>
+        </div>
+    </form>
+</div>
+{include file="../../../application/admin/view/public/foot" /}

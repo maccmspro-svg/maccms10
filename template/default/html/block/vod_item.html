@@ -1,0 +1,11 @@
+<div class="vod-item"> <a class="vod-item-img shining" href="{$vo|mac_url_vod_detail}">
+          <div class="img-wrapper lazyload" data-original="{$vo.vod_pic|mac_url_img}"></div>
+          {if $vo.vod_score gt 0}<span class="vod-item-score">{$vo.vod_score}</span>{/if}
+          <span class="vod-item-status text-row-1">{include file="block/status"}</span>
+          </a>
+          <div class="vod-item-info">
+            <h3 class="vod-item-title text-row-1 text-row-xs-2"><a href="{$vo|mac_url_vod_detail}"{if !empty($vo.vod_color)} style="color:#{$vo.vod_color};"{/if}>{$vo.vod_name}</a></h3>
+            <div class="vod-item-desc hidden-xs">
+              <p class="text-row-2">{$vo.vod_actor|mac_url_create='actor','vod','search','&nbsp;'}</p></div>
+          </div>
+        </div>

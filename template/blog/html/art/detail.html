@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+<link rel="stylesheet" href="{$maccms.path_tpl}skin/css/share.css">
+</head>
+<body>
+<div id="wrapper">
+  {include file="block/header"}
+  <div id="main">
+    <div class="wrap">
+      <div class="post">
+        <div class="post-title">
+          <h1 class="title">{$obj.art_name}</h1>
+          <div class="post_icon">
+            <span class="mr10 postuser"><i class="icon-user"></i><a>{$obj.art_author|default='admin'}</a></span>
+            <span class="mr10 postclock"><i class="icon-clock"></i>{$obj.art_time|date='Y-m-d H:i:s',###}</span>
+            <span class="mr10 posteye"><i class="icon-eye"></i>{$obj.art_hits}</span>
+          </div>
+        </div>
+        <div class="post-content">{$obj.art_content}</div>
+        <div class="postmetadata">
+          <i class="icon-share-squared"></i>本文链接地址：<a href="{$obj|mac_url_art_detail}" title="{$obj.art_name}">{$obj.art_name}</a>
+        </div>
+        <div class="clear"></div>
+        <div id="related">
+          <div class="related_about"><span>相关文章</span></div>
+          <ul class="related_img">
+            {maccms:art num="4" type="current" not="'.$obj['art_id'].'" by="hits_week" order="desc"}
+            <li class="related_box"><a href="{$vo|mac_url_art_detail}" title="{$vo.art_name}"><img class="thumbnail" src="{$vo.art_pic|mac_url_img}" alt="{$vo.art_name}"><h3>{$vo.art_name}</h3></a></li>
+            {/maccms:art}
+          </ul>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+  {include file="block/left"}
+</div>
+{include file="block/footer"}
+</body>
+</html>

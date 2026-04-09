@@ -1,0 +1,8 @@
+<div class="vod-item vod-item-slide goods-item-slide">
+            <a class="vod-item-img shining" href="{:mac_url('goods/detail',['id'=>$vo.goods_id])}"><div class="img-wrapper swiper-lazy" data-background="{if !empty($vo.goods_pic_slide)}{$vo.goods_pic_slide|mac_url_img}{else/}{$vo.goods_pic|mac_url_img}{/if}"></div></a>
+            <div class="vod-item-info">
+            <h3 class="vod-item-title text-row-1"><a href="{:mac_url('goods/detail',['id'=>$vo.goods_id])}">{$vo.goods_name}</a></h3>
+            <div class="vod-item-desc">
+              <p class="text-row-2">￥{$vo.goods_price}{if !empty($vo.goods_points)} · {$vo.goods_points} 积分{/if}</p></div>
+            </div>
+          </div>

@@ -1,0 +1,21 @@
+<div class="content">
+  <div class="content-header">
+    <a href="{$vo|mac_url_art_detail}" title="{$vo.art_name}"><h2>{$vo.art_name}</h2></a>
+    <div class="content-info">
+      <span class="mr10 postclock"><i class="icon-clock"></i>{$vo.art_time|date='Y-m-d H:i:s',###}</span>
+      <span class="mr10 postuser"><i class="icon-user"></i><a>{$vo.art_author|default='admin'}</a></span>
+      <span class="mr10 posteye"><i class="icon-eye"></i>{$vo.art_hits}</span>
+    </div>
+  </div>
+  <div class="content-img">
+    <a href="{$vo|mac_url_art_detail}" title="{$vo.art_name}">
+      <img class="lazy thumbnail" src="{$vo.art_pic|mac_url_img}" data-original="{$vo.art_pic|mac_url_img}" alt="{$vo.art_name}">
+    </a>
+  </div>
+  <div class="content-note">
+    <p>{$vo.art_blurb|mac_filter_html|mac_substring=###,120}</p>
+    <div class="content-info-r">
+      <span class="mr10"><a href="{$vo|mac_url_art_detail}" title="{$vo.art_name}">READ MORE</a><i class="icon-export-alt"></i></span>
+    </div>
+  </div>
+</div>

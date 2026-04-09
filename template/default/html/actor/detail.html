@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="detail-box gap">
+  <div class="detail-box-bg blur" style="background-image:url({$obj.actor_pic|mac_url_img});"></div>
+  <div class="container detail-container">
+    <div class="row">
+      <div class="col-xs-4 col-md-3 col-xl-2">
+        <div class="detail-img"> <img class="lazyload" src="{$maccms.path_tpl}images/loading.gif" data-original="{$obj.actor_pic|mac_url_img}" alt="{$obj.actor_name}"> </div>
+      </div>
+      <div class="col-xs-8 col-md-9 col-xl-10">
+        <div class="detail-info">
+          <h1 class="detail-info-title text-row-2"{if !empty($obj.actor_color)} style="color:#{$obj.actor_color};"{/if}>{$obj.actor_name}</h1>
+          <ul class="detail-info-desc row">
+            <li class="col-xs-12 col-md-6 col-lg-4 text-overflow"><i class="fa fa-heart-o fa-fw"></i><span>别名</span>：{$obj.actor_alias|default="暂无"}</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 text-overflow hidden-xs hidden-sm hidden-md"><i class="fa fa-venus-mars fa-fw"></i><span>性别</span>：{$obj.actor_sex|default="暂无"}</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 text-overflow"><i class="fa fa-flag fa-fw"></i>地区：{$obj.actor_area|default="未知"}</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 text-overflow hidden-xs hidden-sm"><i class="fa fa-arrows-v fa-fw"></i><span>身高</span>：{$obj.actor_height|default="未知"}</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 text-overflow hidden-xs hidden-sm"><i class="fa fa-balance-scale fa-fw"></i><span>体重</span>：{$obj.actor_weight|default="未知"}</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 text-overflow hidden-xs"><i class="fa fa-star-o fa-fw"></i><span>星座</span>：{$obj.actor_starsign|default="未知"}</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 text-overflow hidden-xs"><i class="fa fa-eyedropper fa-fw"></i><span>血型</span>：{$obj.actor_blood|default="未知"}</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 text-overflow"><i class="fa fa-birthday-cake fa-fw"></i><span>生日</span>：{$obj.actor_birthday|default="未知"}</li>
+            <li class="col-xs-12 col-md-6 col-lg-4 text-overflow hidden-xs"><i class="fa fa-map-marker fa-fw"></i><span>出生地区</span>：{$obj.actor_birtharea|default="未知"}</li>
+            <li class="col-xs-12 text-row-3 text-row-lg-4 hidden-xs hidden-sm hidden-md"><i class="fa fa-file-text-o fa-fw"></i><span>简介</span>：{$obj.actor_blurb|trim|default="未知"}</li>
+          </ul>
+          <div class="detail-info-btn"> <a class="ewave-digg actor-detail-up" href="javascript:;" data-id="{$obj.actor_id}" data-mid="{$maccms.mid}" data-type="up"><i class="fa fa-thumbs-o-up"></i>&nbsp;为TA点赞（<span class="ewave-digg-num">{$obj.actor_up}</span>）</a> </div>
+        </div>
+      </div>
+      {if !empty(mac_filter_html($obj.actor_blurb))}
+      <div class="col-xs-12 hidden-lg hidden-xl hidden-xxl">
+        <div class="detail-intro ewave-collapse">
+          <div class="ewave-collapse-toggle">
+            <p class="detail-intro-text text-row ewave-collapse-content"> {$obj.actor_blurb} </p>
+            <div class="detail-intro-more text-center"><i class="fa fa-angle-down"></i></div>
+          </div>
+        </div>
+      </div>
+      {/if} </div>
+  </div>
+</div>
+<div class="container">
+  <div class="box gap">
+    <div class="box-head clearfix ewave-swiper ewave-swiper-nav" data-slidetoclickedslide="true">
+      <ul class="swiper-wrapper">
+        <li class="box-head-title swiper-slide ewave-tab actor-detail-tab-item content active" data-target="#actor-content"><i class="fa fa-heart-o"></i><span>个人资料</span></li>
+        <li class="box-head-title swiper-slide ewave-tab actor-detail-tab-item vod" data-target="#actor-vod"><i class="fa fa-tv"></i><span>参演影视</span></li>
+        <li class="box-head-title swiper-slide ewave-tab actor-detail-tab-item art" data-target="#actor-art"><i class="fa fa-file-text-o"></i><span>相关资讯</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-xl-9">
+      <div class="layout-box gap"> {php}$vod_show=0;$art_show=0;{/php}
+        <div class="ewave-tab-content actor-content" id="actor-content"> {if !empty($obj.actor_content)}
+          {$obj.actor_content|mac_url_content_img}
+          {else/}
+          <div class="ewave-empty"><i class="fa fa-minus-circle"></i>&nbsp;暂未录入{$obj.actor_name}的个人资料</div>
+          {/if} </div>
+        <div class="ewave-tab-content actor-vod" id="actor-vod" style="display:none;">
+          <ul class="row vod-list">
+            {maccms:vod num="61" actor="'.$obj['actor_name'].'" by="hits_week" order="desc"}
+            {if $key lt 61}
+            <li class="col-xs-4 col-md-3">{include file="block/vod_item"}</li>
+            {/if}
+            {php}$vod_show++;{/php}
+            {/maccms:vod}
+            {if $vod_show==0}
+            <div class="ewave-empty"><i class="fa fa-minus-circle"></i>&nbsp;抱歉，暂未收录{$obj.actor_name}参演影视</div>
+            {/if}
+          </ul>
+        </div>
+        <div class="ewave-tab-content actor-art clearfix" id="actor-art" style="display:none;">
+          <ul class="art-list">
+            {maccms:art num="10" wd="'.$obj['actor_name'].'" by="time" order="desc"}
+            {include file="block/art_item"}
+            {php}$art_show++;{/php}
+            {/maccms:art}
+            {if $art_show==0}
+            <div class="ewave-empty"><i class="fa fa-minus-circle"></i>&nbsp;抱歉，未找到{$obj.actor_name}相关资讯</div>
+            {/if}
+          </ul>
+        </div>
+      </div>
+      {include file="block/comment"} </div>
+    <div class="col-xs-12 col-xl-3 hidden-xs hidden-sm hidden-md hidden-lg movie ewave-sticky gap">
+      <div class="box ranking-box">
+        <div class="box-head">
+          <h3 class="box-head-title">&nbsp;<i class="fa fa-fire"></i>&nbsp;<span>热门影视</span></h3>
+        </div>
+        <ul class="ranking-list vod-ranking-list">
+          {maccms:vod num="10" by="hits_week" order="desc"}
+          {if condition="$key elt 3"}
+          {include file="block/vod_item_ranking"}
+          {else/}
+          {include file="block/vod_item_ranking_text"}
+          {/if}
+          {/maccms:vod}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>

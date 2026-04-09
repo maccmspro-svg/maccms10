@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="container">
+  <div class="box layout-box gap shop" style="margin-bottom:12px;">
+    <ul class="breadcrumb" style="padding:0;margin:0;list-style:none;font-size:13px;color:var(--text-color-2);">
+      <li style="display:inline;"><a href="{$maccms.path}">首页</a></li>
+      <li style="display:inline;"> &gt; </li>
+      <li style="display:inline;"><a href="{:mac_url('goods/index')}">商城</a></li>
+      {if condition="!empty($obj.type_name)"}
+      <li style="display:inline;"> &gt; </li>
+      <li style="display:inline;">{$obj.type_name}</li>
+      {/if}
+    </ul>
+  </div>
+
+  <div class="box layout-box filter-box gap shop">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><a href="javascript:;"><i class="fa fa-filter"></i>&nbsp;<span>筛选</span></a></h3>
+      <ul class="filter-selected-list clearfix hidden-xs hidden-sm hidden-md">
+        {if condition="!empty($obj.type_name)"}
+        <li><a href="{:mac_url('goods/index')}">{$obj.type_name}</a></li>
+        {/if}
+        {if condition="!empty($param.class)"}
+        <li><a href="{$g_class_clear}">{$param.class}&nbsp;<i class="fa fa-times"></i></a></li>
+        {/if}
+        {if condition="!empty($param.tag)"}
+        <li><a href="{$g_tag_clear}">{$param.tag}&nbsp;<i class="fa fa-times"></i></a></li>
+        {/if}
+        {if condition="!empty($param.level)"}
+        <li><a href="{$g_level_all}">等级{$param.level}&nbsp;<i class="fa fa-times"></i></a></li>
+        {/if}
+        {if condition="!empty($param.letter)"}
+        <li><a href="{$g_letter_all}">首字母{$param.letter}&nbsp;<i class="fa fa-times"></i></a></li>
+        {/if}
+        {if condition="!empty($param.wd)"}
+        <li><a href="{$g_wd_clear}">{$param.wd}&nbsp;<i class="fa fa-times"></i></a></li>
+        {/if}
+      </ul>
+      <a class="box-head-more filter-more" href="{:mac_url('goods/type',['id'=>$param.id])}">重置&nbsp;<i class="fa fa-refresh"></i></a>
+    </div>
+    <div class="filter-content">
+      {if condition="!empty($obj.type_id)"}
+      <dl class="clearfix">
+        <dt>分类<i class="fa fa-caret-right text-muted"></i></dt>
+        <dd class="ewave-swiper ewave-swiper-nav">
+          <div class="swiper-wrapper">
+            {if condition="!empty($obj.type_pid) && $obj.type_pid gt 0"}
+            <a class="swiper-slide" href="{:mac_url('goods/type',['id'=>$obj.type_pid])}">上级分类</a>
+            {maccms:type ids="child" parent="'.$obj['type_pid'].'" by="sort" order="asc"}
+            <a class="swiper-slide{if $vo.type_id==$obj.type_id} active{/if}" href="{:mac_url('goods/type',['id'=>$vo.type_id])}">{$vo.type_name}</a>
+            {/maccms:type}
+            {else/}
+            {maccms:type ids="child" parent="'.$obj['type_id'].'" by="sort" order="asc"}
+            <a class="swiper-slide{if $vo.type_id==$obj.type_id} active{/if}" href="{:mac_url('goods/type',['id'=>$vo.type_id])}">{$vo.type_name}</a>
+            {/maccms:type}
+            {/if}
+          </div>
+        </dd>
+      </dl>
+      {/if}
+      <dl class="clearfix">
+        <dt>排序<i class="fa fa-caret-right text-muted"></i></dt>
+        <dd class="ewave-swiper ewave-swiper-nav">
+          <div class="swiper-wrapper">
+            <a class="swiper-slide{if $g_act_sort_time} active{/if}" href="{$g_sort_time}">综合</a>
+            <a class="swiper-slide{if $g_act_sort_new} active{/if}" href="{$g_sort_new}">最新上架</a>
+            <a class="swiper-slide{if $g_act_price_asc} active{/if}" href="{$g_sort_price_asc}">价格升序</a>
+            <a class="swiper-slide{if $g_act_price_desc} active{/if}" href="{$g_sort_price_desc}">价格降序</a>
+            <a class="swiper-slide{if $g_act_points_asc} active{/if}" href="{$g_sort_points_asc}">积分从低到高</a>
+            <a class="swiper-slide{if $g_act_hits} active{/if}" href="{$g_sort_hits}">人气</a>
+            <a class="swiper-slide{if $g_act_id} active{/if}" href="{$g_sort_id}">最新发布</a>
+          </div>
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt>推荐<i class="fa fa-caret-right text-muted"></i></dt>
+        <dd class="ewave-swiper ewave-swiper-nav">
+          <div class="swiper-wrapper">
+            <a class="swiper-slide{if $g_act_level_all} active{/if}" href="{$g_level_all}">全部</a>
+            <a class="swiper-slide{if $g_act_level_9} active{/if}" href="{$g_level_9}">橱窗推荐</a>
+          </div>
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt>字母<i class="fa fa-caret-right text-muted"></i></dt>
+        <dd class="ewave-swiper ewave-swiper-nav">
+          <div class="swiper-wrapper">
+            <a class="swiper-slide{if $g_act_letter_all} active{/if}" href="{$g_letter_all}">全部</a>
+            {maccms:foreach name="g_letter_list" id="lv"}
+            <a class="swiper-slide{if $param.letter==$lv.letter} active{/if}" href="{$lv.url}">{$lv.letter}</a>
+            {/maccms:foreach}
+          </div>
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt>搜索<i class="fa fa-caret-right text-muted"></i></dt>
+        <dd>
+          <form class="goods-filter-search" method="get" action="{:mac_url('goods/type',['id'=>$param.id])}" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+            <input type="hidden" name="id" value="{$param.id}"/>
+            {if condition="!empty($param.by)"}<input type="hidden" name="by" value="{$param.by}"/>{/if}
+            {if condition="!empty($param.order)"}<input type="hidden" name="order" value="{$param.order}"/>{/if}
+            {if condition="!empty($param.level)"}<input type="hidden" name="level" value="{$param.level}"/>{/if}
+            {if condition="!empty($param.letter)"}<input type="hidden" name="letter" value="{$param.letter}"/>{/if}
+            {if condition="!empty($param.class)"}<input type="hidden" name="class" value="{$param.class}"/>{/if}
+            {if condition="!empty($param.tag)"}<input type="hidden" name="tag" value="{$param.tag}"/>{/if}
+            <input type="search" name="wd" value="{$param.wd|default=''}" placeholder="商品名称关键词" style="min-width:180px;padding:6px 10px;border-radius:4px;border:1px solid var(--bg-color-3);background:var(--bg-color-2);color:var(--text-color-1);"/>
+            <button type="submit" style="padding:6px 16px;border-radius:4px;background:var(--theme-color);color:var(--theme-text-color);border:none;cursor:pointer;">搜索</button>
+          </form>
+        </dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="box gap shop">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><i class="fa fa-th-large"></i>&nbsp;<span>{if condition="!empty($obj.type_name)"}{$obj.type_name}{else/}商品列表{/if}</span></h3>
+      <a class="box-head-more" href="{:mac_url('goods/index')}">返回商城首页&nbsp;<i class="fa fa-angle-right"></i></a>
+    </div>
+    <div class="vod-list goods-list">
+      <div class="row">
+        {maccms:goods num="24" paging="yes" pageurl="goods/type"}
+        <div class="col-xs-6 col-md-4 col-lg-3">
+          {include file="block/goods_item"}
+        </div>
+        {/maccms:goods}
+      </div>
+    </div>
+    {if condition="isset($__PAGING__) && $__PAGING__['page_total'] gt 1"}
+    <div class="mac_pages shop-goods-paging">
+      <div class="page_info">
+        <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',1,###}">首页</a>
+        <a class="page_link page_nav" href="{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_prev,###}">&#8249; 上一页</a>
+        {maccms:foreach name="$__PAGING__.page_num" id="num"}
+        {if condition="$__PAGING__['page_current'] eq $num"}
+        <a class="page_link page_current" href="javascript:;">{$num}</a>
+        {else}
+        <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',$num,###}">{$num}</a>
+        {/if}
+        {/maccms:foreach}
+        <a class="page_link page_nav" href="{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_next,###}">下一页 &#8250;</a>
+        <a class="page_link" href="{$__PAGING__.page_url|str_replace='PAGELINK',$__PAGING__.page_total,###}">尾页</a>
+      </div>
+    </div>
+    {/if}
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>

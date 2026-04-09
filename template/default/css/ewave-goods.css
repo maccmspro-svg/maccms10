@@ -1,0 +1,256 @@
+@charset "UTF-8";
+/* 商城模块 — 与 ewave-style 变量一致 */
+.goods-list .goods-item {
+  margin-bottom: var(--theme-gap);
+}
+/* 栅格列内等高：同一行商品卡片底部对齐，避免一高一矮 */
+.goods-list .row > [class*="col-"] {
+  display: flex;
+}
+.goods-list .goods-item {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.goods-item {
+  background: var(--bg-color-2);
+  border-radius: 5px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.goods-item:hover {
+  box-shadow: var(--theme-shadow);
+}
+.goods-item-img {
+  display: block;
+  position: relative;
+}
+/* 商城列表封面：1:1 方图（全局 .img-wrapper 为 padding-bottom:130%，约 300×390） */
+.goods-item-img .img-wrapper {
+  padding-bottom: 100%;
+}
+.goods-item-badge {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  background: var(--theme-color);
+  color: var(--theme-text-color);
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  z-index: 1;
+}
+.goods-item-info {
+  padding: 10px 12px 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.goods-item-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  line-height: 1.35;
+}
+/* 手机端标题最多两行（text-row-xs-2），固定占两行高度，避免长短不一导致错位 */
+@media (max-width: 575.9px) {
+  .goods-item .goods-item-title {
+    min-height: calc(1.35em * 2);
+  }
+}
+/* 价格一行 + 积分一行：无积分时第二行仍占位，高度与有积分时一致 */
+.goods-item-meta {
+  display: grid;
+  grid-template-rows: auto minmax(1.25em, auto);
+  gap: 4px;
+  align-items: start;
+}
+.goods-item-price {
+  color: var(--theme-color);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.goods-item-points {
+  display: block;
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--theme-color-2);
+  min-height: 1.25em;
+}
+.goods-item-points:empty::before {
+  content: "\200b";
+}
+/* 与首页「分类二」等标题一致：色块上为白色图标。勿设为 theme 色，否则与 ::after 背景同色导致看不见 */
+.box.shop .box-head-title .fa {
+  color: #fff;
+}
+.box.shop .box-head-title::after {
+  background-color: var(--theme-color);
+}
+.box.shop .box-head-more:hover {
+  color: var(--theme-color);
+}
+.goods-detail-buy {
+  margin-top: var(--theme-gap);
+  padding: var(--theme-gap);
+  background: var(--bg-color-3);
+  border-radius: 5px;
+}
+.goods-detail-buy .form-row {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.goods-detail-buy label {
+  color: var(--text-color-2);
+  margin-right: 6px;
+}
+.goods-detail-buy input[type="number"] {
+  width: 72px;
+  padding: 6px 8px;
+  border: 1px solid var(--bg-color-3);
+  border-radius: 4px;
+  background: var(--bg-color-2);
+  color: var(--text-color-1);
+}
+.goods-detail-buy select {
+  min-width: 140px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--bg-color-3);
+  background: var(--bg-color-2);
+  color: var(--text-color-1);
+}
+.goods-buy-btn {
+  display: inline-block;
+  padding: 10px 22px;
+  background: var(--theme-color);
+  color: var(--theme-text-color) !important;
+  border: none;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 6px;
+}
+.goods-buy-btn:disabled,
+.goods-buy-btn.disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.goods-fav-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  font-size: 13px;
+  border-radius: 999px;
+  border: 1px solid var(--bg-color-3);
+  background: var(--bg-color-2);
+  color: var(--text-color-2);
+  cursor: pointer;
+  vertical-align: middle;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.goods-fav-btn:hover {
+  border-color: var(--theme-color);
+  color: var(--theme-color);
+}
+.goods-fav-btn.on,
+.goods-fav-btn.active {
+  border-color: var(--theme-color);
+  background: rgba(255, 77, 79, 0.08);
+  color: var(--theme-color);
+}
+.goods-fav-btn.on .fa-heart,
+.goods-fav-btn.active .fa-heart {
+  color: var(--theme-color);
+}
+.goods-fav-btn.guest {
+  color: var(--text-color-2);
+}
+/* 商品详情富文本：防止大图/表格/编辑器内联宽高把整页横向撑开（线上未更新 CSS 或缓存旧文件时易复现） */
+.goods-detail-main .detail-desc-content {
+  line-height: 1.7;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.goods-detail-main .detail-desc-content img,
+.goods-detail-main .detail-desc-content video {
+  max-width: 100% !important;
+  height: auto !important;
+}
+.goods-detail-main .detail-desc-content iframe {
+  max-width: 100%;
+}
+.goods-detail-main .detail-desc-content table {
+  max-width: 100%;
+}
+.goods-order-card .order-status-paid {
+  color: #16a34a;
+}
+.goods-order-card .order-status-wait {
+  color: var(--theme-color-2);
+}
+
+/* 商城列表分页 — 白底灰边 + 当前页红橙底（与常见影视站分页一致） */
+.shop-goods-paging {
+  margin-top: 24px;
+  padding: 20px 0 12px;
+  text-align: center;
+  clear: both;
+}
+.shop-goods-paging .page_info {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  max-width: 100%;
+}
+.shop-goods-paging .page_link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  font-size: 13px;
+  line-height: 1;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  color: #666;
+  text-decoration: none !important;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.shop-goods-paging .page_link:hover:not(.page_current) {
+  border-color: var(--theme-color, #ff4d4f);
+  color: var(--theme-color, #ff4d4f);
+}
+.shop-goods-paging .page_link.page_nav {
+  min-width: 92px;
+  padding: 0 14px;
+}
+.shop-goods-paging .page_link.page_current {
+  background: var(--theme-color, #ff4d4f);
+  color: var(--theme-text-color, #fff) !important;
+  border-color: var(--theme-color, #ff4d4f);
+  cursor: default;
+  font-weight: 600;
+}
+.shop-goods-paging .page_link.page_current:hover {
+  color: var(--theme-text-color, #fff) !important;
+  background: var(--theme-color, #ff4d4f);
+  border-color: var(--theme-color, #ff4d4f);
+}

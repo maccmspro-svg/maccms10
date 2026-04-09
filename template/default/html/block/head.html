@@ -1,0 +1,120 @@
+<header class="head-wrapper">
+  <div class="head-box max-container clearfix">
+    <div class="head-left">
+      <div class="logo-box shining"> <a class="logo" href="{$maccms.path}">
+        <div class="logo-img hidden-xs hidden-sm hidden-md"{if !empty($maccms.site_logo)} style="background-image:url({$maccms.site_logo|mac_url_img})"{/if}></div>
+        <span class="logo-text hidden-lg hidden-xl hidden-xxl text-overflow">{$maccms.site_name}</span> </a> </div>
+      <div class="head-nav ewave-swiper ewave-swiper-nav hidden-xs hidden-sm hidden-md">
+        <ul class="swiper-wrapper">
+          <li class="swiper-slide{if $maccms.aid==1} active{/if}"><a href="{$maccms.path}">首页</a></li>
+          {maccms:type ids="parent" mid="13" by="sort" order="asc" id="type" key="key_type"}
+          {if !empty($type.childids)}
+          <li class="swiper-slide ewave-dropdown{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} active{/if}"><a href="{$type|mac_url_type}">{$type.type_name}&nbsp;<i class="fa fa-caret-down"></i></a>
+            <div class="ewave-dropdown-box">
+              {maccms:type ids="child" parent="'.$type['type_id'].'" by="sort" order="asc"}
+              <a {if $GLOBALS.type_id==$vo.type_id} class="current"{/if} href="{$vo|mac_url_type}">{$vo.type_name}</a>
+              {/maccms:type}
+            </div>
+          </li>
+          {else/}
+          <li class="swiper-slide{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} active{/if}"><a href="{$type|mac_url_type}">{$type.type_name}</a></li>
+          {/if}
+          {/maccms:type}
+          {maccms:type ids="parent" flag="vod" by="sort" order="asc" id="type" key="key_type"}
+          {if !empty($type.childids)}
+          <li class="swiper-slide ewave-dropdown{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} active{/if}"><a href="{$type|mac_url_type}">{$type.type_name}&nbsp;<i class="fa fa-caret-down"></i></a>
+            <div class="ewave-dropdown-box">
+              {maccms:type ids="child" parent="'.$type['type_id'].'" by="sort" order="asc"}
+              <a {if $GLOBALS.type_id==$vo.type_id} class="current"{/if} href="{$vo|mac_url_type}">{$vo.type_name}</a>
+              {/maccms:type}
+            </div>
+          </li>
+          {else/}
+          <li class="swiper-slide{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} active{/if}"><a href="{$type|mac_url_type}">{$type.type_name}</a></li>
+          {/if}
+          {/maccms:type}
+          {maccms:type ids="parent" flag="art" by="sort" order="asc" id="type" key="key_type"}
+          {if !empty($type.childids)}
+          <li class="swiper-slide ewave-dropdown{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} active{/if}"><a href="{$type|mac_url_type}">{$type.type_name}&nbsp;<i class="fa fa-caret-down"></i></a>
+            <div class="ewave-dropdown-box">
+              {maccms:type ids="child" parent="'.$type['type_id'].'" by="sort" order="asc"}
+              <a {if $GLOBALS.type_id==$vo.type_id} class="current"{/if} href="{$vo|mac_url_type}">{$vo.type_name}</a>
+              {/maccms:type}
+            </div>
+          </li>
+          {else/}
+          <li class="swiper-slide{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} active{/if}"><a href="{$type|mac_url_type}">{$type.type_name}</a></li>
+          {/if}
+          {/maccms:type}
+          {maccms:type ids="parent" mid="8" by="sort" order="asc" id="type" key="key_type"}
+          {if !empty($type.childids)}
+          <li class="swiper-slide ewave-dropdown{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} active{/if}"><a href="{$type|mac_url_type}">{$type.type_name}&nbsp;<i class="fa fa-caret-down"></i></a>
+            <div class="ewave-dropdown-box">
+              {maccms:type ids="child" parent="'.$type['type_id'].'" by="sort" order="asc"}
+              <a {if $GLOBALS.type_id==$vo.type_id} class="current"{/if} href="{$vo|mac_url_type}">{$vo.type_name}</a>
+              {/maccms:type}
+            </div>
+          </li>
+          {else/}
+          <li class="swiper-slide{if $GLOBALS.type_id==$type.type_id||$GLOBALS.type_pid==$type.type_id} active{/if}"><a href="{$type|mac_url_type}">{$type.type_name}</a></li>
+          {/if}
+          {/maccms:type}
+          {if mac_data_count(0,'all','topic') gt 0}
+          <li class="swiper-slide{if $maccms.mid==3} active{/if}"><a href="{:mac_url_topic_index()}">影视专题</a></li>
+          {/if}
+          <li class="swiper-slide{if $label_name=='new'} active{/if}"><a href="{:mac_url('label/new')}" title="最近更新">最近更新</a></li>
+          <li class="swiper-slide{if $label_name=='ranking'} active{/if}"><a href="{:mac_url('label/ranking')}" title="排行榜">排行榜</a></li>
+          {if $GLOBALS.config.gbook.status==1}
+          <li class="swiper-slide{if $maccms.mid==5} active{/if}"><a href="{:mac_url('gbook/index')}">留言报错</a></li>
+          {/if}
+        </ul>
+      </div>
+    </div>
+    <div class="head-search hidden-xs hidden-sm hidden-md">
+      <form method="get"action="{if $maccms.mid==2}{:mac_url('art/search')}{elseif $maccms.mid==8/}{:mac_url('actor/search')}{else/}{:mac_url('vod/search')}{/if}">
+        <input name="wd" type="search" autocomplete="off" placeholder="搜索" value="{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}{$param.tag}" required>
+        <div class="ewave-dropdown ewave-click-dropdown ewave-search-dropdown"> <span class="ewave-search-dropdown-text">{if $maccms.mid==2}文章{elseif $maccms.mid==8/}明星{else/}视频{/if}</span>&nbsp;<i class="fa fa-caret-down"></i>
+          <div class="ewave-dropdown-box">
+            <ul>
+              <li data-action="{:mac_url('vod/search')}"><a href="javascript:;">视频</a></li>
+              <li data-action="{:mac_url('art/search')}"><a href="javascript:;">文章</a></li>
+              <li data-action="{:mac_url('actor/search')}"><a href="javascript:;">明星</a></li>
+            </ul>
+          </div>
+        </div>
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+    <div class="head-right">
+      <div class="head-right-item head-menu-switch ewave-offcanvas hidden-lg hidden-xl hidden-xxl" data-target="#menu">
+        <a href="javascript:;"><i class="fa fa-bars"></i><span>菜单</span></a>
+      </div>
+      <div class="head-right-item skin-switch"> <a class="light" href="javascript:;" title="切换至亮色模式"><i class="fa fa-sun-o"></i><span>换肤</span></a> <a class="dark" href="javascript:;" title="切换至暗色模式"><i class="fa fa-moon-o"></i><span>换肤</span></a> </div>
+      <div class="head-right-item ewave-history"></div>
+      {if $GLOBALS.config.user.status==1}
+      <div class="head-right-item ewave-user"></div>
+      {/if}
+    </div>
+  </div>
+  <div class="head-bg"></div>
+</header>
+<div class="head-placeholder"></div>
+<div class="side-menu ewave-offcanvas-content hidden-lg hidden-xl hidden-xxl" id="menu">
+  <div class="menu-search">
+    <form method="get"action="{if $maccms.mid==2}{:mac_url('art/search')}{elseif $maccms.mid==8/}{:mac_url('actor/search')}{else/}{:mac_url('vod/search')}{/if}">
+        <input name="wd" type="search" autocomplete="off" placeholder="输入关键词搜索" value="{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}{$param.tag}" required>
+        <div class="ewave-dropdown ewave-click-dropdown ewave-search-dropdown"> <span class="ewave-search-dropdown-text">{if $maccms.mid==2}文章{elseif $maccms.mid==8/}明星{else/}视频{/if}</span>&nbsp;<i class="fa fa-caret-down"></i>
+          <div class="ewave-dropdown-box">
+            <ul>
+              <li data-action="{:mac_url('vod/search')}"><a href="javascript:;">视频</a></li>
+              <li data-action="{:mac_url('art/search')}"><a href="javascript:;">文章</a></li>
+              <li data-action="{:mac_url('actor/search')}"><a href="javascript:;">明星</a></li>
+            </ul>
+          </div>
+        </div>
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+  </div>
+  {include file="block/side_menu"}
+</div>
+<div class="ewave-offcanvas-modal hidden-lg hidden-xl hidden-xxl"></div>

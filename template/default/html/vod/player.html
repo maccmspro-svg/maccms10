@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow"/>
+<title>iframe播放器</title>
+{include file="block/include"}
+<style>
+* {
+  word-wrap: break-word;
+  outline: none
+}
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: #fff;
+}
+</style>
+</head>
+<body topmargin="0" leftmargin="0" marginheight="0" marginwidth="0">
+{if $obj.vod_copyright==1 && $GLOBALS['config']['app']['copyright_status'] eq 4}
+<div class="ewave-copyright-notice ewave-absolute-center"> {if !empty($obj.vod_jumpurl)}<a href="{$obj.vod_jumpurl}" target="_blank">{$GLOBALS['config']['app']['copyright_notice']|default='因版权问题，本站不提供播放'}</a>{else/}{$GLOBALS['config']['app']['copyright_notice']|default='因版权问题，本站不提供播放'}{/if}
+</div>
+{else/}
+{$player_data}
+{$player_js}
+{if $popedom.code gt 1/}
+<div class="player_showtry" style="display:none;">
+  <div class="ewave-player-popedom ewave-absolute-center text-center">
+    {if $obj.vod_points_play eq 0}
+    <p>试看{$popedom.trysee}分钟结束，完整观看本影片需要升级会员组，请升级后观看。</p>
+    <small>提示：购买VIP会员组，享受超级权限，谢谢支持。</small>
+    {if empty($user.user_id)}
+    <p><a href="javascript:;" onclick="window.parent.eWave.User.Login();">马上登录</a></p>
+    {else/}
+    <p><a href="{:mac_url('user/index')}" target="_blank">会员中心</a>&nbsp;<a href="{:mac_url('user/upgrade')}" target="_blank">马上升级</a></p>
+    {/if}
+    {else/}
+    <p>试看{$popedom.trysee}分钟结束，完整观看本影片需要花费{if $GLOBALS.config.user.vod_points_type==0}每集{$obj.vod_points_play}{else/}{$obj.vod_points}{/if}积分，请支付后观看。</p>
+    <small>提示：一次支付，永久观看，不重复扣费，谢谢支持。</small>
+    {if empty($user.user_id)}
+    <p><a href="javascript:;" onclick="window.parent.eWave.User.Login();">马上登录</a></p>
+    {else/}
+    <p><a href="{:mac_url('user/buy')}" target="_blank">马上充值</a>&nbsp;<a href="javascript:;" onclick="window.parent.eWave.User.BuyPopedom(this)" data-id="{$obj.vod_id}" data-sid="{$param.sid}" data-nid="{$param.nid}" data-type="4" data-mid="{$maccms.mid}">确认购买</a></p>
+    {/if}
+    {/if}
+  </div>
+</div>
+<script>
+window.setTimeout(function(){
+  $('.MacPlayer').html( $('.player_showtry').html() );
+},1000*60*{$popedom.trysee});
+</script> 
+{/if}
+{/if}
+<script>
+(function () {
+  function patchVideo(el) {
+    if (!el || el.tagName !== 'VIDEO') return;
+    el.setAttribute('playsinline', '');
+    el.setAttribute('webkit-playsinline', '');
+    el.setAttribute('x5-video-player-type', 'h5');
+    el.setAttribute('x5-video-player-fullscreen', 'true');
+    el.setAttribute('x5-playsinline', 'true');
+  }
+  function scan(root) {
+    if (!root || !root.querySelectorAll) return;
+    var i, list = root.querySelectorAll('video');
+    for (i = 0; i < list.length; i++) patchVideo(list[i]);
+  }
+  scan(document);
+  if (window.MutationObserver) {
+    var obs = new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        var j, nodes = m.addedNodes;
+        for (j = 0; j < nodes.length; j++) {
+          var n = nodes[j];
+          if (n.nodeType === 1) {
+            if (n.tagName === 'VIDEO') patchVideo(n);
+            else scan(n);
+          }
+        }
+      });
+    });
+    obs.observe(document.documentElement, { childList: true, subtree: true });
+  }
+})();
+</script>
+</body>
+</html>

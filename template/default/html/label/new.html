@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+{php}$label_name='new';{/php}
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="container tv">
+  <div class="box ranking-box gap">
+    <div class="box-head clearfix">
+      <h3 class="box-head-title"><i class="fa fa-clock-o"></i>&nbsp;<span>最近更新</span></h3>
+    </div>
+    <ul class="ranking-list vod-ranking-list">
+      {maccms:vod num="100" by="time" order="desc"}
+      {include file="block/vod_item_ranking_text"}
+      {/maccms:vod}
+    </ul>
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>

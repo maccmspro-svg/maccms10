@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>订单信息 - {$maccms.seo.site_name|default="商城"}</title>
+</head>
+<body>
+
+{if condition="!empty($order.go_id)"}
+<h1>订单已创建</h1>
+<p>订单号：{$order.go_code}</p>
+<p>金额：<strong>{$order.go_price}</strong></p>
+<p>创建时间：{$order.go_time|mac_day}</p>
+<p>请根据后续支付指引完成支付。</p>
+
+{elseif condition="!empty($obj.goods_id)" /}
+<h1>确认订单</h1>
+<p>商品名称：{$obj.goods_name}</p>
+<p>价格：<strong>{$obj.goods_price|default='0.00'}</strong></p>
+
+<form method="post" action="{:mac_url('goods/buy',[],$obj)}">
+    <p>
+        购买数量：
+        <input type="number" name="num" value="1" min="1" style="width:60px;">
+    </p>
+    <p>
+        支付方式：
+        <select name="payment">
+            <option value="weixin">微信支付</option>
+            <option value="alipay">支付宝</option>
+            <option value="epay">易支付</option>
+            <option value="balance">余额支付</option>
+        </select>
+    </p>
+    <p>
+        <button type="submit">提交订单</button>
+    </p>
+</form>
+
+{else/}
+<h1>订单信息</h1>
+<p>未找到相关订单或商品信息。</p>
+{/if}
+
+</body>
+</html>
+

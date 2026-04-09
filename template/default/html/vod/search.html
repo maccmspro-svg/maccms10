@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+{include file="block/seo"}
+{include file="block/include"}
+</head>
+<body>
+{include file="block/head"}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-xl-9 gap ewave-sticky">
+      <div class="box layout-box search-box">
+        <div class="box-head clearfix">
+          <h3 class="box-head-title mr-5"><i class="fa fa-search"></i><span>&nbsp;搜索&nbsp;<span class="search-wd">{$param.wd}{$param.actor}{$param.director}{$param.area}{$param.lang}{$param.year}{$param.class}{$param.tag}</span></span></h3>
+          {include file="block/search_tab"}
+        </div>
+        <div class="search-list">
+          {maccms:vod num="10" paging="yes" half="3" by="time" order="desc" pageurl="vod/search"}
+          {include file="block/vod_item_info"}
+          {/maccms:vod}
+        </div>
+        {include file="block/paging"}
+      </div>
+    </div>
+    <div class="col-xs-12 col-xl-3 gap hidden-xs hidden-sm hidden-md hidden-lg movie ewave-sticky">
+        <div class="box ranking-box">
+          <div class="box-head">
+            <h3 class="box-head-title">&nbsp;<i class="fa fa-fire"></i>&nbsp;<span>热门影视</span></h3>
+          </div>
+          <ul class="ranking-list vod-ranking-list">
+            {maccms:vod num="10" by="hits_week" order="desc"}
+            {if condition="$key elt 3"}
+            {include file="block/vod_item_ranking"}
+            {else/}
+            {include file="block/vod_item_ranking_text"}
+            {/if}
+            {/maccms:vod}
+          </ul>
+        </div>
+      </div>
+  </div>
+</div>
+{include file="block/foot"}
+</body>
+</html>
